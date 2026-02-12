@@ -112,17 +112,6 @@
       align-items: center;
       flex-wrap: wrap;
     }
-    .qr {
-      width: 140px;
-      height: 140px;
-      padding: 12px;
-      background: #fff;
-      border-radius: 8px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      box-shadow: 0 4px 12px rgba(20, 24, 28, 0.06);
-    }
     .small {
       font-size: 13px;
       color: var(--muted);
@@ -166,23 +155,19 @@
 
         <div>
           <div class="qr-wrap">
-            <!-- QR-код из вашего репозитория mem, аккуратный и маленький -->
+            <!-- QR-код из репозитория mem -->
             <div class="small" style="display: inline-block; padding: 10px; border: 1px solid #ddd; border-radius: 8px; background: white; margin: 10px 0;">
               <a href="https://qrcod.ru/" target="_blank">
                 <img src="https://github.com/levsergeevich324-prog/mem/raw/main/qr.svg" alt="QR-код" style="display: block; width: 120px; height: 120px;">
               </a>
             </div>
             <div>
-              <div class="small">Ссылка на репозиторий:</div>
-              <a id="repoLink" href="#" target="_blank" class="small">https://github.com/LevSergeevich324-prog.git</a>
-              <div style="height:8px"></div>
               <button class="btn secondary" id="downloadZip">Скачать архив</button>
             </div>
           </div>
 
           <div class="controls">
             <button class="btn secondary" id="downloadPhoto">Скачать фото</button>
-            <button class="btn secondary" id="editBtn">Редактировать</button>
           </div>
         </div>
       </section>
@@ -200,8 +185,7 @@
       tagline: "Любимая мама, бабушка и друг",
       bio: "Родилась в 1938 году. Здесь добавим места жизни, род деятельности, важные события и тёплые воспоминания.",
       photo: "photo.jpg",
-      video: "video.mp4",
-      repo: "https://github.com/LevSergeevich324-prog.git"
+      video: "video.mp4"
     };
 
     document.getElementById('name').textContent = defaults.name;
@@ -211,10 +195,6 @@
     document.getElementById('photo').src = defaults.photo;
     document.getElementById('video').querySelector('source').src = defaults.video;
     document.getElementById('video').load();
-    document.getElementById('repoLink').href = defaults.repo;
-    document.getElementById('repoLink').textContent = defaults.repo;
-
-    });
 
     // Скачать фото
     document.getElementById('downloadPhoto').addEventListener('click', () => {
@@ -240,7 +220,7 @@
       URL.revokeObjectURL(url);
       alert('Скачан файл index.html. Добавьте фото и видео в ту же папку перед загрузкой на GitHub.');
     });
-   
+
     function applyFromQuery() {
       const params = new URLSearchParams(location.search);
       if (params.get('name')) document.getElementById('name').textContent = params.get('name');
@@ -249,7 +229,6 @@
       if (params.get('bio')) document.getElementById('bio').innerHTML = "<p>" + params.get('bio') + "</p>";
       if (params.get('photo')) { document.getElementById('photo').src = params.get('photo'); }
       if (params.get('video')) { document.getElementById('video').querySelector('source').src = params.get('video'); document.getElementById('video').load(); }
-      if (params.get('repo')) { document.getElementById('repoLink').href = params.get('repo'); document.getElementById('repoLink').textContent = params.get('repo'); }
     }
     applyFromQuery();
   </script>
