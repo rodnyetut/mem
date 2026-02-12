@@ -11,20 +11,6 @@
       50% { opacity: 0.8; }
     }
 
-    @keyframes shootingStar {
-      0% {
-        transform: translateX(0) translateY(0) rotate(-45deg);
-        opacity: 1;
-      }
-      70% {
-        opacity: 0.8;
-      }
-      100% {
-        transform: translateX(400px) translateY(400px) rotate(-45deg);
-        opacity: 0;
-      }
-    }
-
     body {
       margin: 0;
       padding: 0;
@@ -56,16 +42,6 @@
       border-radius: 50%;
       box-shadow: 0 0 12px rgba(255, 255, 255, 0.9);
       animation: starPulse 4s infinite ease-in-out;
-    }
-
-    .shooting-star {
-      position: absolute;
-      width: 2px;
-      height: 90px;
-      background: linear-gradient(to bottom, rgba(255,255,255,0) 0%, rgba(255,255,245,1) 60%, rgba(255,255,255,0) 100%);
-      transform: rotate(-45deg);
-      opacity: 0;
-      animation: shootingStar 6s linear infinite;
     }
 
     /* ===== ОСНОВНОЙ КОНТЕНТ ===== */
@@ -249,12 +225,12 @@
   </style>
 </head>
 <body>
-  <!-- ===== ЗВЁЗДНОЕ НЕБО ===== -->
+  <!-- ===== ЗВЁЗДНОЕ НЕБО (БЕЗ КОМЕТ) ===== -->
   <div class="stars" id="stars"></div>
 
   <div class="wrap">
     <!-- КАРТОЧКА ПРОЗРАЧНАЯ — ЗВЁЗДЫ ВИДНЫ -->
-    <!--<div class="card">  -->
+    <div class="card">
       
       <!-- ШАПКА: ФОТОГРАФИЯ -->
       <header>
@@ -264,14 +240,14 @@
         <div>
           <h1 id="name">Карелина Миля Илларионовна</h1>
           <div class="dates" id="dates">1938 — 2013</div>
-          <div class="tagline" id="tagline"> Ты там где живёт только Бог.... Ты там где кончаются звёзды... </div>
+          <div class="tagline" id="tagline">Ты там где живёт только Бог.... Ты там где кончаются звёзды...</div>
         </div>
       </header>
 
       <!-- БИОГРАФИЯ -->
       <section class="bio" id="bio">
-        <p> Родилась в 1938 году. Её жизнь пришлась на непростые годы, но она сохранила доброту, достоинство и умение радоваться простым вещам. Работала, растила детей, стала опорой для внуков. Её помнят как человека с тихим голосом, мудрым взглядом и открытым сердцем. </p>
-        </section>
+        <p>Родилась в 1938 году. Её жизнь пришлась на непростые годы, но она сохранила доброту, достоинство и умение радоваться простым вещам. Работала, растила детей, стала опорой для внуков, буквально жила ради них работая даже на пенсии. Её помнят как человека с тихим голосом, мудрым взглядом и открытым сердцем.</p>
+      </section>
 
       <!-- ВИДЕО (БЕЗ ЗАЦИКЛИВАНИЯ) И QR-КОД -->
       <section class="media">
@@ -283,7 +259,7 @@
           </video>
         </div>
 
-          <div class="qr-section"> 
+        <div class="qr-section">
           <div class="qr-label">страница памяти</div>
           <div class="qr-frame">
             <a href="https://qrcod.ru/" target="_blank">
@@ -307,11 +283,11 @@
   </div>
 
   <script>
-    // ===== ГЕНЕРАЦИЯ ЗВЁЗДНОГО НЕБА =====
+    // ===== ГЕНЕРАЦИЯ ЗВЁЗДНОГО НЕБА (ТОЛЬКО ЗВЁЗДЫ, БЕЗ КОМЕТ) =====
     function createStars() {
       const starsContainer = document.getElementById('stars');
       
-      // Обычные звёзды
+      // Обычные звёзды — 250 штук, мерцают
       for (let i = 0; i < 250; i++) {
         const star = document.createElement('div');
         star.className = 'star';
@@ -325,18 +301,6 @@
         star.style.opacity = Math.random() * 0.5 + 0.2;
         starsContainer.appendChild(star);
       }
-
-      // Падающие звёзды
-      for (let i = 0; i < 10; i++) {
-        const shootingStar = document.createElement('div');
-        shootingStar.className = 'shooting-star';
-        shootingStar.style.left = Math.random() * 80 + '%';
-        shootingStar.style.top = Math.random() * 30 + '%';
-        shootingStar.style.animationDelay = Math.random() * 3 + 's';
-        shootingStar.style.animationDuration = Math.random() * 2 + 3 + 's';
-        shootingStar.style.opacity = Math.random() * 0.6 + 0.2;
-        starsContainer.appendChild(shootingStar);
-      }
     }
 
     // Данные
@@ -344,7 +308,7 @@
       name: "Карелина Миля Илларионовна",
       dates: "1938 — 2013",
       tagline: "Ты там где живёт только Бог.... Ты там где кончаются звёзды...",
-      bio: "<p>Родилась в 1938 году. Её жизнь пришлась на непростые годы, но она сохранила доброту, достоинство и умение радоваться простым вещам. Работала, растила детей, стала опорой для внуков,буквально жила ради них работая даже на пенсии.Её помнят как человека с тихим голосом, мудрым взглядом и открытым сердцем.</p>",
+      bio: "<p>Родилась в 1938 году. Её жизнь пришлась на непростые годы, но она сохранила доброту, достоинство и умение радоваться простым вещам. Работала, растила детей, стала опорой для внуков, буквально жила ради них работая даже на пенсии. Её помнят как человека с тихим голосом, мудрым взглядом и открытым сердцем.</p>",
       photo: "photo.jpg",
       video: "https://github.com/levsergeevich324-prog/mem/raw/main/video.mp4"
     };
