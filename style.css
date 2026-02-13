@@ -207,21 +207,13 @@ h1 {
 }
 
 .qr-frame {
-  display: inline-block;
-  padding: 8px; /* Уменьшили padding */
-  background: rgba(20, 30, 40, 0.85); /* Темный фон вместо белого */
-  border-radius: 16px;
-  border: 1px solid rgba(180, 200, 220, 0.3); /* Более тонкая граница */
-  margin-bottom: 15px;
-  box-shadow: 0 6px 16px rgba(0,0,0,0.4);
-  transition: all 0.3s ease;
+  background: rgba(25, 35, 50, 0.85); /* Глубокий сине-серый */
+  border: 1px solid rgba(100, 150, 200, 0.3); /* Голубоватая граница */
 }
 
 .qr-frame:hover {
-  background: rgba(30, 40, 55, 0.9);
-  border-color: rgba(210, 230, 250, 0.5);
-  transform: translateY(-2px);
-  box-shadow: 0 10px 20px rgba(0,0,0,0.5);
+  background: rgba(35, 45, 65, 0.9);
+  border-color: rgba(130, 180, 230, 0.5);
 }
 
 .qr-frame img {
