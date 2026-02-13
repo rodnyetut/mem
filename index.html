@@ -19,7 +19,7 @@
   <div class="stars" id="stars"></div>
 
   <div class="wrap">
-   <!-- <div class="card"> -->
+    <div class="card">
       
       <!-- ШАПКА С ФОТО -->
       <header>
@@ -40,7 +40,13 @@
       <!-- ВИДЕО И QR -->
       <section class="media">
         <div class="video-wrapper">
-          <video id="video" controls playsinline preload="metadata">
+          <video id="video" 
+                 controls 
+                 playsinline 
+                 preload="auto"
+                 muted 
+                 autoplay 
+                 loop>
             <source src="https://github.com/levsergeevich324-prog/mem/raw/main/video.mp4" type="video/mp4">
             Ваш браузер не поддерживает видео.
           </video>
@@ -82,10 +88,10 @@
         </div>
       </section>
 
-      <!-- ПОДВАЛ  -->
+      <!-- ПОДВАЛ С ПАМЯТНЫМИ СЛОВАМИ -->
       <footer>
         <div class="memorial-message">
-          <p class="message-text">«  Любимая  мама,  бабушка, свекровь, подруга,  -  мы не прощаемся.  А смотрим на небо ...  »</p>
+          <p class="message-text">«Любимая мама, бабушка, подруга, - мы не прощаемся. А смотрим на небо...»</p>
           <p class="message-author"></p>
         </div>
         <div class="footer-bottom">
