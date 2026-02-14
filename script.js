@@ -1,3 +1,4 @@
+
 // ===== ГЕНЕРАЦИЯ ЗВЁЗДНОГО НЕБА =====
 function createStars() {
   const starsContainer = document.getElementById('stars');
@@ -53,8 +54,8 @@ function createStars() {
 // Данные
 const defaults = {
   name: "Карелина Миля Илларионовна",
-  dates: "1938 - 2013",
-  bio: "<p>Родилась в 1935 году(по  паспорту в 1938).Её жизнь пришлась на непростые годы, но она сохранила доброту, достоинство и умение радоваться простым вещам. Работала, растила детей, стала опорой для внуков, буквально жила ради них работая даже на пенсии. Её помнят как человека с тихим голосом, мудрым взглядом и открытым сердцем.</p>",
+  dates: "1938 — 2013",
+  bio: "<p>Родилась в 1938 году. Её жизнь пришлась на непростые годы, но она сохранила доброту, достоинство и умение радоваться простым вещам. Работала, растила детей, стала опорой для внуков, буквально жила ради них работая даже на пенсии. Её помнят как человека с тихим голосом, мудрым взглядом и открытым сердцем.</p>",
   photo: "photo.jpg",
   video: "https://github.com/levsergeevich324-prog/mem/raw/main/video.mp4"
 };
@@ -63,26 +64,18 @@ const defaults = {
 function setupVideo(videoElement) {
   if (!videoElement) return;
   
-  // Устанавливаем все необходимые атрибуты для автовоспроизведения и зацикливания
-  videoElement.muted = true;      // обязательно для автовоспроизведения
-  videoElement.loop = true;       // зацикливание
-  videoElement.autoplay = true;   // автовоспроизведение
-  videoElement.playsInline = true; // для мобильных устройств
-  videoElement.preload = 'auto';   // предзагрузка
+  videoElement.muted = true;
+  videoElement.loop = true;
+  videoElement.autoplay = true;
+  videoElement.playsInline = true;
+  videoElement.preload = 'auto';
   
-  // Пытаемся воспроизвести видео
   const playPromise = videoElement.play();
-  
   if (playPromise !== undefined) {
-    playPromise
-      .then(() => {
-        console.log('Видео успешно воспроизводится');
-      })
-      .catch(error => {
-        console.log('Автовоспроизведение не удалось:', error);
-        // Если автовоспроизведение не сработало, показываем контролы
-        videoElement.controls = true;
-      });
+    playPromise.catch(error => {
+      console.log('Автовоспроизведение не удалось:', error);
+      videoElement.controls = true;
+    });
   }
 }
 
@@ -94,175 +87,50 @@ function setContent() {
   const photoEl = document.getElementById('photo');
   const videoEl = document.getElementById('video');
   
-  // Устанавливаем текстовый контент
   if (nameEl) nameEl.textContent = defaults.name;
   if (datesEl) datesEl.textContent = defaults.dates;
   if (bioEl) bioEl.innerHTML = defaults.bio;
   
-  // Устанавливаем фото
   if (photoEl) {
     photoEl.src = defaults.photo;
-    photoEl.onerror = function() {
-      console.log('Ошибка загрузки фото');
-      this.src = 'https://via.placeholder.com/120x120?text=Photo';
-    };
   }
 
-  // Настраиваем видео
   if (videoEl) {
-    // Обновляем источник видео
     const sourceEl = videoEl.querySelector('source');
     if (sourceEl) {
       sourceEl.src = defaults.video;
     }
-    
-    // Перезагружаем видео с новым источником
     videoEl.load();
-    
-    // Настраиваем автовоспроизведение и зацикливание
-    setupVideo(videoEl);
-    
-    // Обработка ошибок видео
-    videoEl.onerror = function() {
-      console.log('Ошибка загрузки видео');
-      // Показываем сообщение об ошибке
-      const wrapper = this.closest('.video-wrapper');
-      if (wrapper) {
-        const errorMsg = document.createElement('div');
-        errorMsg.className = 'video-error';
-        errorMsg.innerHTML = 'Не удалось загрузить видео';
-        errorMsg.style.cssText = `
-          position: absolute;
-          top: 50%;
-          left: 50%;
-          transform: translate(-50%, -50%);
-          color: #fff;
-          background: rgba(0,0,0,0.7);
-          padding: 10px 20px;
-          border-radius: 8px;
-          font-family: 'Cormorant Garamond', serif;
-        `;
-        wrapper.style.position = 'relative';
-        wrapper.appendChild(errorMsg);
-      }
-    };
-  }
-}
-
-// ===== ПРОВЕРКА ЗАГРУЗКИ ВСЕХ РЕСУРСОВ =====
-function checkResources() {
-  const videoEl = document.getElementById('video');
-  
-  // Дополнительная проверка для видео
-  if (videoEl) {
-    // Если видео уже загружено, но не играет
-    if (videoEl.readyState >= 2) { // HAVE_CURRENT_DATA или больше
-      setupVideo(videoEl);
-    }
-    
-    // Слушаем событие загрузки видео
-    videoEl.addEventListener('loadeddata', function() {
-      console.log('Видео загружено');
-      setupVideo(this);
-    });
-  }
-}
-
-// ===== ОБРАБОТЧИКИ СОБЫТИЙ =====
-
-// Пересоздаем звезды при изменении размера окна (с debounce)
-let resizeTimer;
-function handleResize() {
-  clearTimeout(resizeTimer);
-  resizeTimer = setTimeout(() => {
-    createStars();
-  }, 200);
-}
-
-// Обработчик видимости страницы (для продолжения воспроизведения)
-function handleVisibilityChange() {
-  const videoEl = document.getElementById('video');
-  if (!videoEl) return;
-  
-  if (!document.hidden) {
-    // Страница стала видимой - пробуем воспроизвести видео
     setupVideo(videoEl);
   }
 }
 
-// ===== ИНИЦИАЛИЗАЦИЯ =====
-document.addEventListener('DOMContentLoaded', function() {
-  console.log('DOM загружен, инициализация...');
-  
-  // Устанавливаем контент
-  setContent();
-  
-  // Создаем звезды
-  createStars();
-  
-  // Проверяем ресурсы
-  setTimeout(checkResources, 500); // Небольшая задержка для полной загрузки DOM
-  
-  // Слушаем изменение видимости страницы
-  document.addEventListener('visibilitychange', handleVisibilityChange);
-  
-  // Слушаем изменение размера окна
-  window.addEventListener('resize', handleResize);
-  
-  // Слушаем загрузку страницы
-  window.addEventListener('load', function() {
-    console.log('Страница полностью загружена');
-    checkResources();
-  });
-});
-
-// ===== ОЧИСТКА ПРИ ВЫХОДЕ =====
-window.addEventListener('beforeunload', function() {
-  // Удаляем обработчики событий
-  window.removeEventListener('resize', handleResize);
-  document.removeEventListener('visibilitychange', handleVisibilityChange);
-  
-  // Останавливаем видео
-  const videoEl = document.getElementById('video');
-  if (videoEl) {
-    videoEl.pause();
-    videoEl.removeAttribute('src');
-    videoEl.load();
-  }
-});
-
-// ===== ДОПОЛНИТЕЛЬНАЯ ФУНКЦИЯ ДЛЯ МОБИЛЬНЫХ УСТРОЙСТВ =====
-// Некоторые мобильные браузеры требуют взаимодействия с пользователем
-function enableMobilePlayback() {
-  const videoEl = document.getElementById('video');
-  if (!videoEl) return;
-  
-  // Если видео не играет после загрузки страницы на мобильном
-  if (videoEl.paused) {
-    // Добавляем обработчик первого касания
-    const enablePlayback = function() {
-      setupVideo(videoEl);
-      document.removeEventListener('touchstart', enablePlayback);
-      document.removeEventListener('click', enablePlayback);
-    };
-    
-    document.addEventListener('touchstart', enablePlayback);
-    document.addEventListener('click', enablePlayback);
-  }
-}
-// ===== МЕРЦАНИЕ ДАТЫ С ЭФФЕКТОМ ЗВЕЗДЫ =====
+// ===== МЕРЦАНИЕ ДАТЫ (1938 ⇄ 1935) =====
 function createDateAnimation() {
+  console.log('Запуск анимации даты'); // Для отладки
+  
   const datesElement = document.getElementById('dates');
-  if (!datesElement) return;
+  if (!datesElement) {
+    console.log('Элемент dates не найден');
+    return;
+  }
+  
+  console.log('Элемент dates найден:', datesElement.textContent);
   
   let isOriginal = true;
   const originalText = datesElement.textContent;
   
-  // Создаем дополнительный элемент для эффекта
-  datesElement.style.position = 'relative';
+  // Проверяем, что текст содержит 1938
+  if (!originalText.includes('1938')) {
+    console.log('В тексте нет 1938');
+    return;
+  }
+  
+  // Добавляем стили для элемента
+  datesElement.style.transition = 'opacity 0.3s ease, transform 0.3s ease, color 0.3s ease';
   datesElement.style.cursor = 'pointer';
   
-  // Добавляем тултип с объяснением
+  // Создаем тултип
   const tooltip = document.createElement('span');
   tooltip.className = 'date-tooltip';
   tooltip.textContent = '1935 - настоящий год рождения';
@@ -271,22 +139,25 @@ function createDateAnimation() {
     bottom: 100%;
     left: 50%;
     transform: translateX(-50%);
-    background: rgba(20, 30, 45, 0.9);
+    background: rgba(20, 30, 45, 0.95);
     color: #d8ecff;
-    padding: 6px 12px;
-    border-radius: 20px;
-    font-size: 12px;
+    padding: 8px 16px;
+    border-radius: 24px;
+    font-size: 14px;
     font-family: 'Cormorant Garamond', serif;
     white-space: nowrap;
-    border: 1px solid rgba(170, 200, 230, 0.3);
+    border: 1px solid rgba(170, 200, 230, 0.4);
     backdrop-filter: blur(4px);
     opacity: 0;
     transition: opacity 0.3s ease;
     pointer-events: none;
-    z-index: 20;
+    z-index: 100;
     letter-spacing: 1px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
   `;
   
+  // Устанавливаем относительное позиционирование для родителя
+  datesElement.style.position = 'relative';
   datesElement.appendChild(tooltip);
   
   // Показываем тултип при наведении
@@ -303,38 +174,49 @@ function createDateAnimation() {
     // Эффект затухания
     datesElement.style.opacity = '0.5';
     datesElement.style.transform = 'scale(0.98)';
+    datesElement.style.color = '#aac8e0';
     
     setTimeout(() => {
       if (isOriginal) {
         datesElement.textContent = originalText.replace('1938', '1935');
-        datesElement.style.borderBottomColor = '#aac8e0'; // Меняем цвет подчеркивания
+        console.log('Сменили на 1935');
       } else {
         datesElement.textContent = originalText;
-        datesElement.style.borderBottomColor = '#6a85a0'; // Возвращаем исходный цвет
+        console.log('Сменили на 1938');
       }
       isOriginal = !isOriginal;
       
       // Возвращаем нормальный вид
       datesElement.style.opacity = '1';
       datesElement.style.transform = 'scale(1)';
+      datesElement.style.color = '#c8d9ec';
     }, 300);
   }
   
-  // Запускаем цикл смены
+  // Запускаем интервал
+  console.log('Запускаем интервал смены даты');
   setInterval(toggleDate, 2500);
-  
-  // Добавляем плавные переходы
-  datesElement.style.transition = 'opacity 0.3s ease, transform 0.3s ease, border-bottom-color 0.3s ease';
 }
 
-// Запуск
+// ===== ОБРАБОТЧИК СОБЫТИЙ =====
 document.addEventListener('DOMContentLoaded', function() {
-  // Существующий код инициализации...
+  console.log('DOM загружен, инициализация...');
   
-  // Запускаем анимацию даты
-  setTimeout(createDateAnimation, 1500);
+  // Устанавливаем контент
+  setContent();
+  
+  // Создаем звезды
+  createStars();
+  
+  // Запускаем анимацию даты с задержкой
+  setTimeout(createDateAnimation, 500);
 });
-// Запускаем для мобильных устройств
-if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
-  document.addEventListener('DOMContentLoaded', enableMobilePlayback);
-}
+
+// Обработчик resize для звезд
+let resizeTimer;
+window.addEventListener('resize', function() {
+  clearTimeout(resizeTimer);
+  resizeTimer = setTimeout(() => {
+    createStars();
+  }, 200);
+});
