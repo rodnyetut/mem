@@ -54,8 +54,8 @@ function createStars() {
 // Данные
 const defaults = {
   name: "Карелина Миля Илларионовна",
-  dates: "1938 — 2013",
-  bio: "<p>Родилась в 1938 году. Её жизнь пришлась на непростые годы, но она сохранила доброту, достоинство и умение радоваться простым вещам. Работала, растила детей, стала опорой для внуков, буквально жила ради них работая даже на пенсии. Её помнят как человека с тихим голосом, мудрым взглядом и открытым сердцем.</p>",
+  dates: "1935 — 2013",
+  bio: "<p>Родилась в 1935 году. Её жизнь пришлась на непростые годы, но она сохранила доброту, достоинство и умение радоваться простым вещам. Работала, растила детей, стала опорой для внуков, буквально жила ради них работая даже на пенсии. Её помнят как человека с тихим голосом, мудрым взглядом и открытым сердцем.</p>",
   photo: "photo.jpg",
   video: "https://github.com/levsergeevich324-prog/mem/raw/main/video.mp4"
 };
@@ -121,8 +121,8 @@ function createDateAnimation() {
   const originalText = datesElement.textContent;
   
   // Проверяем, что текст содержит 1938
-  if (!originalText.includes('1938')) {
-    console.log('В тексте нет 1938');
+  if (!originalText.includes('1936')) {
+    console.log('В тексте нет 1936');
     return;
   }
   
@@ -182,7 +182,7 @@ function createDateAnimation() {
         console.log('Сменили на 1935');
       } else {
         datesElement.textContent = originalText;
-        console.log('Сменили на 1938');
+        console.log('Сменили на 1936');
       }
       isOriginal = !isOriginal;
       
