@@ -229,8 +229,8 @@ h1 {
 
 .qr-frame img {
   display: block;
-  width: 130px;
-  height: 130px;
+  width: 210px;
+  height: 210px;
   max-width: 100%;
   position: relative;
   z-index: 1;
