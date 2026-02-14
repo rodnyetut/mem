@@ -162,40 +162,27 @@ h1 {
   align-items: start;
   margin-bottom: 45px;
 }
-/* ===== ВИДЕО БЕЗ ОБРЕЗКИ (АДАПТИВНОЕ) ===== */
+
 .video-wrapper {
-  background: #000000;
+  background: #030405;
   border-radius: 16px;
   overflow: hidden;
   border: 1px solid #3e5266;
   box-shadow: 0 10px 25px rgba(0,0,0,0.6);
   width: 100%;
-  margin: 0 auto;
+  aspect-ratio: auto;
 }
 
 .video-wrapper video {
   width: 100%;
   height: auto;
   display: block;
-  background: #000000;
-  max-height: 500px; /* Максимальная высота */
+  background: #030405;
+  object-fit: contain;
+  max-height: 400px;
 }
 
-/* Для мобильных */
-@media screen and (max-width: 768px) {
-  .video-wrapper video {
-    max-height: 400px;
-  }
-}
-
-/* Для маленьких телефонов */
-@media screen and (max-width: 480px) {
-  .video-wrapper video {
-    max-height: 300px;
-  }
-}
-
-/* ===== QR-СЕКЦИЯ ===== */
+/* ===== QR-СЕКЦИЯ С ЦВЕТНЫМ НАЛОЖЕНИЕМ (ВАРИАНТ 5) ===== */
 .qr-section {
   background: rgba(20, 28, 36, 0.75);
   backdrop-filter: blur(4px);
@@ -219,6 +206,7 @@ h1 {
   font-weight: 500;
 }
 
+/* Контейнер для QR-кода с цветным наложением */
 .qr-frame {
   position: relative;
   display: inline-block;
@@ -229,6 +217,7 @@ h1 {
   margin-bottom: 15px;
   box-shadow: 0 6px 16px rgba(0,0,0,0.4);
   transition: all 0.3s ease;
+  overflow: hidden;
 }
 
 .qr-frame:hover {
@@ -240,15 +229,37 @@ h1 {
 
 .qr-frame img {
   display: block;
-  width: 180px;
-  height: 180px;
+  width: 130px;
+  height: 130px;
   max-width: 100%;
+  position: relative;
+  z-index: 1;
   opacity: 0.95;
   transition: opacity 0.3s ease;
 }
 
 .qr-frame:hover img {
   opacity: 1;
+}
+
+/* Цветное наложение поверх QR-кода */
+.qr-frame::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(100, 150, 255, 0.25); /* Голубоватое наложение */
+  mix-blend-mode: color;
+  pointer-events: none;
+  z-index: 2;
+  border-radius: 8px;
+  transition: background 0.3s ease;
+}
+
+.qr-frame:hover::after {
+  background: rgba(120, 170, 255, 0.3); /* Чуть ярче при наведении */
 }
 
 .qr-hint {
@@ -458,6 +469,10 @@ footer {
   .media {
     gap: 20px;
   }
+  
+  .video-wrapper video {
+    max-height: 350px;
+  }
 }
 
 /* Планшеты вертикально и большие телефоны */
@@ -487,7 +502,13 @@ footer {
   }
   
   .video-wrapper {
-    aspect-ratio: 16 / 9; /* Сохраняем соотношение сторон */
+    aspect-ratio: auto;
+  }
+  
+  .video-wrapper video {
+    max-height: 400px;
+    width: 100%;
+    height: auto;
   }
   
   .qr-section {
@@ -561,6 +582,10 @@ footer {
   
   .video-wrapper {
     border-radius: 14px;
+  }
+  
+  .video-wrapper video {
+    max-height: 300px;
   }
   
   .qr-section {
@@ -659,6 +684,10 @@ footer {
     height: 100px;
   }
   
+  .video-wrapper video {
+    max-height: 250px;
+  }
+  
   .caption-text {
     font-size: 16px;
   }
@@ -692,6 +721,10 @@ footer {
     font-size: 19px;
   }
   
+  .video-wrapper video {
+    max-height: 500px;
+  }
+  
   .caption-text {
     font-size: 24px;
   }
@@ -719,6 +752,10 @@ footer {
   
   .media {
     grid-template-columns: 1fr 1fr;
+  }
+  
+  .video-wrapper video {
+    max-height: 250px;
   }
 }
 
