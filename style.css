@@ -1,7 +1,39 @@
-/* ===== ТИХОЕ ЗВЁЗДНОЕ НЕБО ===== */
+/* ===== ЗВЁЗДНОЕ НЕБО ===== */
 @keyframes starPulse {
   0%, 100% { opacity: 0.2; }
   50% { opacity: 1; }
+}
+
+/* Эффект свечи */
+@keyframes candleFlicker {
+  0%, 100% { 
+    opacity: 0.3;
+    transform: scale(1);
+  }
+  25% { 
+    opacity: 0.5;
+    transform: scale(1.02);
+  }
+  50% { 
+    opacity: 0.8;
+    transform: scale(1.05);
+    box-shadow: 0 0 150px rgba(255, 150, 50, 0.6);
+  }
+  75% { 
+    opacity: 0.4;
+    transform: scale(1.02);
+  }
+}
+
+@keyframes sparkleFly {
+  0% {
+    transform: translateY(0) scale(0.5);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(-100px) scale(1.2);
+    opacity: 0;
+  }
 }
 
 * {
@@ -17,16 +49,13 @@ html {
 body {
   margin: 0;
   padding: 0;
-  /* Основной текст - Cormorant Garamond */
-  font-family: 'Cormorant Garamond', 'Georgia', 'Times New Roman', serif;
-  font-weight: 400;
+  font-family: 'Cormorant Garamond', 'Georgia', serif;
   background: #0a0c12;
   color: #eaeef2;
   display: flex;
   justify-content: center;
   align-items: center;
   min-height: 100vh;
-  position: relative;
   overflow-x: hidden;
   line-height: 1.6;
 }
@@ -53,12 +82,148 @@ body {
   z-index: 1;
 }
 
+/* Эффект свечи */
+.candle-effect {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 5;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+  background: radial-gradient(circle at center, rgba(255, 150, 50, 0.08) 0%, transparent 70%);
+}
+
+.candle-effect.active {
+  opacity: 1;
+  animation: candleFlicker 3s infinite ease-in-out;
+}
+
+/* Счетчик свечей */
+.candle-counter {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  background: rgba(20, 30, 40, 0.85);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+  border-radius: 40px;
+  padding: 10px 20px;
+  border: 1px solid rgba(255, 150, 50, 0.3);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  z-index: 100;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+}
+
+.counter-icon {
+  font-size: 22px;
+  animation: gentleFlicker 2s infinite ease-in-out;
+}
+
+@keyframes gentleFlicker {
+  0%, 100% { opacity: 0.8; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.1); text-shadow: 0 0 10px rgba(255, 150, 50, 0.5); }
+}
+
+.counter-text {
+  font-family: 'EB Garamond', serif;
+  font-size: 22px;
+  font-weight: 600;
+  color: #ffb347;
+  min-width: 30px;
+  text-align: center;
+}
+
+/* Контейнер для кнопки */
+.candle-button-container {
+  text-align: center;
+  margin: 30px 0 20px;
+  padding: 20px 0;
+}
+
+/* Кнопка зажечь свечу */
+.candle-button {
+  background: linear-gradient(135deg, rgba(40, 25, 15, 0.9) 0%, rgba(60, 30, 10, 0.9) 100%);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+  border: 2px solid rgba(255, 150, 50, 0.3);
+  border-radius: 60px;
+  padding: 15px 40px;
+  display: inline-flex;
+  align-items: center;
+  gap: 15px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+  position: relative;
+  overflow: hidden;
+}
+
+.candle-button::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  border-radius: 50%;
+  background: rgba(255, 150, 50, 0.2);
+  transform: translate(-50%, -50%);
+  transition: width 0.6s ease, height 0.6s ease;
+}
+
+.candle-button:hover {
+  border-color: rgba(255, 150, 50, 0.8);
+  transform: translateY(-3px);
+  box-shadow: 0 8px 30px rgba(255, 150, 50, 0.15);
+}
+
+.candle-button:hover::before {
+  width: 350px;
+  height: 350px;
+}
+
+.candle-button:active {
+  transform: translateY(-1px);
+}
+
+.candle-button-icon {
+  font-size: 26px;
+  animation: gentleFlicker 2s infinite ease-in-out;
+  position: relative;
+  z-index: 2;
+}
+
+.candle-button-text {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 20px;
+  font-weight: 500;
+  color: #ffb347;
+  letter-spacing: 1px;
+  position: relative;
+  z-index: 2;
+}
+
+/* Плавающие искорки */
+.candle-spark {
+  position: fixed;
+  pointer-events: none;
+  z-index: 50;
+  font-size: 18px;
+  animation: sparkleFly 2s ease-out forwards;
+  filter: drop-shadow(0 0 5px rgba(255, 150, 50, 0.8));
+}
+
 /* ===== ОСНОВНОЙ КОНТЕНТ ===== */
 .wrap {
   width: 100%;
   max-width: 1000px;
   position: relative;
-  z-index: 10;
+  z-index: 20;
   margin: 20px;
   padding: 0;
 }
@@ -72,11 +237,11 @@ body {
   border: 1px solid rgba(210, 220, 235, 0.15);
   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
   position: relative;
-  z-index: 15;
+  z-index: 25;
   width: 100%;
 }
 
-/* ===== ШАПКА С ФОТО ===== */
+/* ШАПКА */
 header {
   display: flex;
   gap: 30px;
@@ -110,21 +275,18 @@ header {
   min-width: 200px;
 }
 
-/* Заголовки - Playfair Display */
 h1 {
   margin: 0;
-  font-family: 'Playfair Display', 'Georgia', 'Times New Roman', serif;
+  font-family: 'Playfair Display', serif;
   font-size: clamp(24px, 4vw, 32px);
   font-weight: 500;
-  letter-spacing: 0.3px;
   color: #ffffff;
   text-shadow: 0 2px 8px rgba(0,0,0,0.6);
   line-height: 1.2;
 }
 
-/* Даты - EB Garamond */
 .dates {
-  font-family: 'EB Garamond', 'Georgia', serif;
+  font-family: 'EB Garamond', serif;
   color: #c8d9ec;
   margin-top: 10px;
   font-size: clamp(16px, 3vw, 18px);
@@ -132,167 +294,119 @@ h1 {
   border-bottom: 1px dashed #6a85a0;
   display: inline-block;
   padding-bottom: 6px;
-  font-weight: 500;
-  letter-spacing: 0.5px;
+  position: relative;
+  cursor: help;
 }
 
-/* ===== БИОГРАФИЯ ===== */
+.dates::after {
+  content: "1935 - настоящий год рождения";
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%) translateY(-5px);
+  background: rgba(20, 30, 45, 0.95);
+  color: #d8ecff;
+  padding: 8px 16px;
+  border-radius: 24px;
+  font-size: 14px;
+  white-space: nowrap;
+  border: 1px solid rgba(170, 200, 230, 0.4);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s ease;
+  pointer-events: none;
+  z-index: 100;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+}
+
+.dates:hover::after {
+  opacity: 1;
+  visibility: visible;
+  transform: translateX(-50%) translateY(0);
+}
+
+/* БИОГРАФИЯ */
 .bio {
   margin-bottom: 40px;
-  width: 100%;
 }
 
 .bio p {
-  font-family: 'Cormorant Garamond', 'Georgia', serif;
   font-size: clamp(16px, 2.5vw, 18px);
-  font-weight: 400;
   color: #ecf0f5;
   margin-bottom: 15px;
   text-align: left;
   line-height: 1.7;
   text-shadow: 0 1px 4px rgba(0,0,0,0.4);
-  word-wrap: break-word;
 }
 
-/* ===== ВИДЕО И QR ===== */
+/* ВИДЕО И QR */
 .media {
   display: grid;
   grid-template-columns: 1fr 280px;
   gap: 25px;
-  align-items: start;
   margin-bottom: 45px;
 }
 
 .video-wrapper {
-  background: #030405;
+  background: #000000;
   border-radius: 16px;
   overflow: hidden;
   border: 1px solid #3e5266;
   box-shadow: 0 10px 25px rgba(0,0,0,0.6);
   width: 100%;
-  aspect-ratio: auto;
 }
 
 .video-wrapper video {
   width: 100%;
   height: auto;
   display: block;
-  background: #030405;
-  object-fit: contain;
   max-height: 400px;
 }
 
-/* ===== QR-СЕКЦИЯ С ЦВЕТНЫМ НАЛОЖЕНИЕМ (ВАРИАНТ 5) ===== */
 .qr-section {
   background: rgba(20, 28, 36, 0.75);
   backdrop-filter: blur(4px);
   -webkit-backdrop-filter: blur(4px);
   border-radius: 20px;
-  padding: 20px 15px;
-  border: 1px solid rgba(170, 200, 230, 0.2);
+  padding: 20px;
   text-align: center;
-  height: fit-content;
 }
 
-.qr-label {
-  font-family: 'EB Garamond', serif;
-  font-size: 12px;
-  text-transform: uppercase;
-  letter-spacing: 4px;
-  color: #b6d0e8;
-  margin-bottom: 15px;
-  border-bottom: 1px solid rgba(150, 190, 230, 0.2);
-  padding-bottom: 12px;
-  font-weight: 500;
-}
-
-/* Контейнер для QR-кода с цветным наложением */
 .qr-frame {
-  position: relative;
   display: inline-block;
   padding: 8px;
   background: rgba(25, 35, 50, 0.85);
   border-radius: 16px;
   border: 1px solid rgba(100, 150, 200, 0.3);
-  margin-bottom: 15px;
-  box-shadow: 0 6px 16px rgba(0,0,0,0.4);
-  transition: all 0.3s ease;
-  overflow: hidden;
-}
-
-.qr-frame:hover {
-  background: rgba(35, 45, 65, 0.9);
-  border-color: rgba(130, 180, 230, 0.5);
-  transform: translateY(-2px);
-  box-shadow: 0 10px 20px rgba(0,0,0,0.5);
 }
 
 .qr-frame img {
   display: block;
-  width: 290px;
-  height: 290px;
+  width: 130px;
+  height: 130px;
   max-width: 100%;
-  position: relative;
-  z-index: 1;
   opacity: 0.95;
-  transition: opacity 0.3s ease;
 }
 
-.qr-frame:hover img {
-  opacity: 1;
-}
-
-/* Цветное наложение поверх QR-кода */
-.qr-frame::after {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: rgba(100, 150, 255, 0.25); /* Голубоватое наложение */
-  mix-blend-mode: color;
-  pointer-events: none;
-  z-index: 2;
-  border-radius: 8px;
-  transition: background 0.3s ease;
-}
-
-.qr-frame:hover::after {
-  background: rgba(120, 170, 255, 0.3); /* Чуть ярче при наведении */
-}
-
-.qr-hint {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 14px;
-  color: #c0d4e8;
-  font-style: italic;
-  margin-top: 10px;
-  border-top: 1px solid rgba(150, 190, 230, 0.2);
-  padding-top: 15px;
-  line-height: 1.5;
-}
-
-/* ===== КООРДИНАТЫ МЕСТА УПОКОЕНИЯ ===== */
+/* КООРДИНАТЫ */
 .coordinates-section {
   background: rgba(20, 35, 50, 0.55);
   backdrop-filter: blur(4px);
   -webkit-backdrop-filter: blur(4px);
   border-radius: 24px;
   padding: 25px 30px;
-  margin-bottom: 45px;
+  margin-bottom: 30px;
   display: flex;
   align-items: center;
   gap: 25px;
   border: 1px solid rgba(190, 210, 230, 0.2);
-  box-shadow: 0 10px 25px rgba(0,0,0,0.3);
-  transition: all 0.3s ease;
   flex-wrap: wrap;
 }
 
 .coordinates-icon {
   font-size: 40px;
-  opacity: 0.9;
   animation: float 4s ease-in-out infinite;
 }
 
@@ -310,11 +424,9 @@ h1 {
   font-family: 'EB Garamond', serif;
   margin: 0 0 8px 0;
   font-size: 14px;
-  font-weight: 400;
   text-transform: uppercase;
   letter-spacing: 4px;
   color: #d8ecff;
-  opacity: 0.9;
 }
 
 .coordinates-display {
@@ -322,23 +434,16 @@ h1 {
   padding: 12px 16px;
   border-radius: 40px;
   display: inline-flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: center;
   margin-bottom: 12px;
   border: 1px solid rgba(200, 225, 250, 0.2);
-  backdrop-filter: blur(2px);
-  -webkit-backdrop-filter: blur(2px);
 }
 
 .coord {
-  font-family: 'EB Garamond', 'Courier New', monospace;
+  font-family: 'EB Garamond', monospace;
   font-size: clamp(16px, 3vw, 20px);
-  font-weight: 500;
   color: #ffffff;
   letter-spacing: 1px;
   text-shadow: 0 0 8px rgba(150, 200, 255, 0.5);
-  word-break: break-word;
 }
 
 .coord-sep {
@@ -351,16 +456,12 @@ h1 {
   margin: 8px 0 15px 0;
 }
 
-/* Памятные надписи - Great Vibes */
 .caption-text {
   font-family: 'Great Vibes', cursive;
   font-size: 22px;
-  font-weight: 400;
   color: #cde1f2;
-  opacity: 0.9;
   border-bottom: 1px dotted #6d8eaa;
   padding-bottom: 4px;
-  letter-spacing: 0.5px;
 }
 
 .coordinates-button {
@@ -372,35 +473,21 @@ h1 {
   text-decoration: none;
   padding: 10px 20px;
   border-radius: 40px;
-  font-family: 'Cormorant Garamond', serif;
   font-size: 16px;
-  font-weight: 500;
   border: 1px solid rgba(200, 225, 250, 0.3);
-  backdrop-filter: blur(2px);
-  -webkit-backdrop-filter: blur(2px);
-  transition: all 0.3s ease;
-  margin-top: 5px;
+  margin-top: 10px;
 }
 
 .coordinates-button:hover {
   background: rgba(80, 120, 160, 0.7);
-  border-color: rgba(255, 255, 255, 0.6);
   transform: translateY(-2px);
-  box-shadow: 0 6px 16px rgba(0,0,0,0.4);
 }
 
-.button-icon {
-  font-size: 16px;
-}
-
-/* ===== ПОДВАЛ ===== */
+/* ПОДВАЛ */
 footer {
   margin-top: 30px;
   padding-top: 25px;
   border-top: 1px solid rgba(200, 220, 240, 0.1);
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
 }
 
 .memorial-message {
@@ -410,39 +497,21 @@ footer {
   border-radius: 16px;
   border-left: 3px solid #aac8e0;
   border-right: 3px solid #aac8e0;
+  margin-bottom: 20px;
 }
 
 .message-text {
   font-family: 'Great Vibes', cursive;
   font-size: clamp(22px, 4vw, 28px);
-  font-weight: 400;
   color: #ffffff;
-  margin: 0 0 8px 0;
   line-height: 1.4;
   text-shadow: 0 2px 6px rgba(0,0,0,0.5);
-  letter-spacing: 0.5px;
-  word-wrap: break-word;
-}
-
-.message-author {
-  font-family: 'EB Garamond', serif;
-  font-size: 16px;
-  color: #c8d9ec;
-  margin: 0;
-  font-style: italic;
-  text-align: right;
-  border-top: 1px dashed rgba(170, 200, 230, 0.3);
-  padding-top: 10px;
-  margin-top: 5px;
-  font-weight: 400;
 }
 
 .footer-bottom {
   display: flex;
   justify-content: space-between;
-  align-items: center;
   color: #b4cce3;
-  font-family: 'Cormorant Garamond', serif;
   font-size: 14px;
   font-style: italic;
   flex-wrap: wrap;
@@ -450,327 +519,21 @@ footer {
 }
 
 .memorial-sign {
-  font-family: 'EB Garamond', serif;
   font-size: 12px;
   letter-spacing: 3px;
   text-transform: uppercase;
   color: #c8def5;
-  font-weight: 500;
 }
 
-/* ===== АДАПТАЦИЯ ПОД ВСЕ УСТРОЙСТВА ===== */
-
-/* Планшеты и небольшие ноутбуки */
-@media screen and (max-width: 900px) {
-  .card {
-    padding: 30px 25px;
-  }
-  
-  .media {
-    gap: 20px;
-  }
-  
-  .video-wrapper video {
-    max-height: 350px;
-  }
-}
-
-/* Планшеты вертикально и большие телефоны */
+/* АДАПТАЦИЯ */
 @media screen and (max-width: 750px) {
-  .wrap {
-    margin: 15px;
-  }
-  
-  .card {
-    padding: 25px 20px;
-  }
-  
-  header {
-    gap: 20px;
-    justify-content: center;
-  }
-  
-  .avatar {
-    width: 100px;
-    height: 100px;
-    flex: 0 0 100px;
-  }
-  
-  .media {
-    grid-template-columns: 1fr;
-    gap: 25px;
-  }
-  
-  .video-wrapper {
-    aspect-ratio: auto;
-  }
-  
-  .video-wrapper video {
-    max-height: 400px;
-    width: 100%;
-    height: auto;
-  }
-  
-  .qr-section {
-    max-width: 350px;
-    margin: 0 auto;
-    width: 100%;
-  }
-  
-  .qr-frame img {
-    width: 120px;
-    height: 120px;
-  }
-  
-  .coordinates-section {
-    padding: 20px;
-    gap: 15px;
-    justify-content: center;
-    text-align: center;
-  }
-  
-  .coordinates-content {
-    text-align: center;
-  }
-  
-  .coordinates-display {
-    display: inline-flex;
-    margin-left: auto;
-    margin-right: auto;
-  }
-  
-  .caption-text {
-    font-size: 20px;
-  }
+  .media { grid-template-columns: 1fr; }
+  .candle-counter { top: 10px; right: 10px; padding: 8px 15px; }
 }
 
-/* Телефоны */
 @media screen and (max-width: 480px) {
-  .wrap {
-    margin: 10px;
-  }
-  
-  .card {
-    padding: 20px 15px;
-    border-radius: 24px;
-  }
-  
-  header {
-    flex-direction: column;
-    text-align: center;
-    gap: 15px;
-  }
-  
-  .avatar {
-    width: 110px;
-    height: 110px;
-    flex: 0 0 110px;
-  }
-  
-  h1 {
-    font-size: 24px;
-  }
-  
-  .dates {
-    font-size: 16px;
-  }
-  
-  .bio p {
-    text-align: left;
-    font-size: 16px;
-  }
-  
-  .video-wrapper {
-    border-radius: 14px;
-  }
-  
-  .video-wrapper video {
-    max-height: 300px;
-  }
-  
-  .qr-section {
-    padding: 18px 12px;
-  }
-  
-  .qr-frame img {
-    width: 110px;
-    height: 110px;
-  }
-  
-  .qr-label {
-    font-size: 11px;
-    letter-spacing: 3px;
-  }
-  
-  .coordinates-section {
-    flex-direction: column;
-    padding: 20px 15px;
-  }
-  
-  .coordinates-icon {
-    font-size: 36px;
-  }
-  
-  .coordinates-title {
-    font-size: 13px;
-    letter-spacing: 3px;
-  }
-  
-  .coord {
-    font-size: 16px;
-  }
-  
-  .coord-sep {
-    font-size: 18px;
-  }
-  
-  .caption-text {
-    font-size: 18px;
-  }
-  
-  .coordinates-button {
-    width: 100%;
-    justify-content: center;
-    padding: 12px 20px;
-    font-size: 15px;
-  }
-  
-  .memorial-message {
-    padding: 15px;
-  }
-  
-  .message-text {
-    font-size: 20px;
-  }
-  
-  .message-author {
-    font-size: 15px;
-  }
-  
-  .footer-bottom {
-    flex-direction: column;
-    text-align: center;
-    justify-content: center;
-    font-size: 13px;
-  }
-}
-
-/* Маленькие телефоны */
-@media screen and (max-width: 360px) {
-  .card {
-    padding: 18px 12px;
-  }
-  
-  .avatar {
-    width: 90px;
-    height: 90px;
-    flex: 0 0 90px;
-  }
-  
-  h1 {
-    font-size: 20px;
-  }
-  
-  .dates {
-    font-size: 14px;
-  }
-  
-  .coord {
-    font-size: 14px;
-  }
-  
-  .qr-frame img {
-    width: 100px;
-    height: 100px;
-  }
-  
-  .video-wrapper video {
-    max-height: 250px;
-  }
-  
-  .caption-text {
-    font-size: 16px;
-  }
-  
-  .message-text {
-    font-size: 18px;
-  }
-}
-
-/* Большие экраны */
-@media screen and (min-width: 1400px) {
-  .wrap {
-    max-width: 1100px;
-  }
-  
-  .card {
-    padding: 50px 45px;
-  }
-  
-  .avatar {
-    width: 130px;
-    height: 130px;
-    flex: 0 0 130px;
-  }
-  
-  h1 {
-    font-size: 34px;
-  }
-  
-  .bio p {
-    font-size: 19px;
-  }
-  
-  .video-wrapper video {
-    max-height: 500px;
-  }
-  
-  .caption-text {
-    font-size: 24px;
-  }
-  
-  .message-text {
-    font-size: 30px;
-  }
-}
-
-/* Ориентация landscape на телефонах */
-@media screen and (max-width: 900px) and (orientation: landscape) {
-  .wrap {
-    margin: 15px;
-  }
-  
-  header {
-    flex-direction: row;
-  }
-  
-  .avatar {
-    width: 80px;
-    height: 80px;
-    flex: 0 0 80px;
-  }
-  
-  .media {
-    grid-template-columns: 1fr 1fr;
-  }
-  
-  .video-wrapper video {
-    max-height: 250px;
-  }
-}
-
-/* Для устройств с touch-экраном убираем hover */
-@media (hover: none) {
-  .coordinates-button:hover {
-    transform: none;
-    background: rgba(60, 90, 120, 0.5);
-  }
-  
-  .coordinates-section:hover {
-    background: rgba(20, 35, 50, 0.55);
-  }
-  
-  .qr-frame:hover {
-    transform: none;
-  }
+  .card { padding: 20px 15px; }
+  header { flex-direction: column; text-align: center; }
+  .candle-button { padding: 12px 25px; }
+  .candle-button-text { font-size: 16px; }
 }
