@@ -5,18 +5,27 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5, user-scalable=yes" />
   <title>Карелина Миля Илларионовна - память</title>
   
-  <!-- Подключение шрифтов Google Fonts для мемориального сайта -->
+  <!-- Подключение шрифтов Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <!-- Комбинация: Playfair Display (заголовки) + Cormorant Garamond (текст) + Great Vibes (памятные надписи) + EB Garamond (даты) -->
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Cormorant+Garamond:wght@300;400;500;600;700&family=Great+Vibes&family=EB+Garamond:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <!-- ЗВЁЗДНОЕ НЕБО -->
   <div class="stars" id="stars"></div>
+  
+  <!-- ЭФФЕКТ СВЕЧИ -->
+  <div class="candle-effect" id="candleEffect"></div>
+  
+  <!-- СЧЕТЧИК ЗАЖЖЕННЫХ СВЕЧЕЙ -->
+  <div class="candle-counter" id="candleCounter">
+    <span class="counter-icon">🕯️</span>
+    <span class="counter-text" id="counterText">0</span>
+  </div>
+
   <div class="wrap">
-    <!--<div class="card"> -->
+    <div class="card">
       
       <!-- ШАПКА С ФОТО -->
       <header>
@@ -48,13 +57,13 @@
             Ваш браузер не поддерживает видео.
           </video>
         </div>
+        
         <div class="qr-section">
-  <div class="qr-frame"> 
-      <img src="https://github.com/levsergeevich324-prog/mem/raw/main/qr2.png" alt="QR-код страницы памяти">
-    </a>
-  </div>
-  </div>     
-     </section>
+          <div class="qr-frame"> 
+            <img src="https://github.com/levsergeevich324-prog/mem/raw/main/qr2.png" alt="QR-код страницы памяти">
+          </div>
+        </div>     
+      </section>
 
       <!-- КООРДИНАТЫ МОГИЛЫ -->
       <section class="coordinates-section"> 
@@ -78,11 +87,18 @@
         </div>
       </section>
 
+      <!-- КНОПКА ЗАЖЕЧЬ СВЕЧУ -->
+      <div class="candle-button-container">
+        <button class="candle-button" id="candleButton">
+          <span class="candle-button-icon">🕯️</span>
+          <span class="candle-button-text">Зажечь свечу</span>
+        </button>
+      </div>
+
       <!-- ПОДВАЛ С ПАМЯТНЫМИ СЛОВАМИ -->
       <footer>
         <div class="memorial-message">
-          <p class="message-text">" Когда уходят хорошие люди, на небе зажигается новая звезда. Теперь их стало больше, а нам светлее... "</p>
-          <p class="message-author"></p>
+          <p class="message-text">"Когда уходят хорошие люди, на небе зажигается новая звезда. Теперь их стало больше, а нам светлее..."</p>
         </div>
         <div class="footer-bottom">
           <span class="memorial-sign">вечная память</span>
