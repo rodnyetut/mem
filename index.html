@@ -72,18 +72,6 @@
       }
     }
 
-    /* Эффект старой бумаги */
-    @keyframes paperReveal {
-      0% {
-        opacity: 0;
-        transform: scale(0.95);
-      }
-      100% {
-        opacity: 1;
-        transform: scale(1);
-      }
-    }
-
     /* Эффект печатающегося текста */
     @keyframes blink {
       0%, 100% { opacity: 1; }
@@ -483,324 +471,171 @@
       max-height: 450px;
     }
 
-    /* ===== СТАРАЯ БУМАГА (исправленная) ===== */
-    .paper-background {
+    /* ===== ПОРТАЛЫ/ИЗМЕРЕНИЯ - ТОЛЬКО ФОН И АНИМАЦИЯ (появляются после забеливания) ===== */
+    .dimensions-container {
       position: relative;
-      background: #e8d9c0;
-      /* Естественная текстура бумаги */
-      background-image: 
-        radial-gradient(circle at 10% 20%, rgba(100, 50, 20, 0.08) 0%, transparent 30%),
-        radial-gradient(circle at 90% 70%, rgba(80, 40, 15, 0.08) 0%, transparent 40%),
-        radial-gradient(circle at 30% 80%, rgba(120, 70, 30, 0.05) 0%, transparent 35%),
-        radial-gradient(circle at 70% 30%, rgba(90, 45, 20, 0.05) 0%, transparent 45%);
-      border-radius: 30px;
-      padding: 30px;
-      box-shadow: 0 10px 40px rgba(0,0,0,0.5), inset 0 0 50px rgba(100, 50, 20, 0.3);
-      border: 2px solid #6b4b2d;
-      min-height: 500px;
-      z-index: 1;
-    }
-
-    /* ПОТЕРТОСТИ - ИСПРАВЛЕНО позиционирование */
-    .wear-mark-1 {
-      position: absolute;
-      top: 30px;
-      left: 50px;
-      width: 200px;
-      height: 100px;
-      background: radial-gradient(ellipse, rgba(100, 60, 30, 0.25) 0%, transparent 70%);
-      border-radius: 50%;
-      transform: rotate(-5deg);
-      filter: blur(10px);
-      pointer-events: none;
-      z-index: 2;
-    }
-
-    .wear-mark-2 {
-      position: absolute;
-      bottom: 50px;
-      right: 40px;
-      width: 250px;
-      height: 130px;
-      background: radial-gradient(ellipse, rgba(80, 40, 20, 0.2) 0%, transparent 70%);
-      border-radius: 60% 40% 50% 50% / 30% 60% 40% 70%;
-      transform: rotate(10deg);
-      filter: blur(12px);
-      pointer-events: none;
-      z-index: 2;
-    }
-
-    .wear-mark-3 {
-      position: absolute;
-      top: 250px;
-      left: 150px;
-      width: 180px;
-      height: 100px;
-      background: radial-gradient(circle, rgba(120, 70, 30, 0.15) 0%, transparent 70%);
-      border-radius: 40% 60% 60% 40% / 60% 40% 60% 40%;
-      transform: rotate(15deg);
-      filter: blur(9px);
-      pointer-events: none;
-      z-index: 2;
-    }
-
-    /* КЛЯКСЫ - ИСПРАВЛЕНО позиционирование */
-    .ink-blot-1 {
-      position: absolute;
-      top: 80px;
-      right: 80px;
-      width: 60px;
-      height: 45px;
-      background: rgba(50, 30, 15, 0.35);
-      border-radius: 70% 30% 60% 40% / 40% 60% 40% 60%;
-      transform: rotate(20deg);
-      filter: blur(4px);
-      box-shadow: 0 0 15px rgba(50, 30, 15, 0.2);
-      pointer-events: none;
-      z-index: 3;
-    }
-
-    .ink-blot-2 {
-      position: absolute;
-      bottom: 150px;
-      left: 100px;
-      width: 50px;
-      height: 40px;
-      background: rgba(40, 25, 10, 0.4);
-      border-radius: 50% 30% 70% 30% / 40% 50% 50% 60%;
-      transform: rotate(-10deg);
-      filter: blur(5px);
-      box-shadow: 0 0 10px rgba(40, 25, 10, 0.2);
-      pointer-events: none;
-      z-index: 3;
-    }
-
-    .ink-blot-3 {
-      position: absolute;
-      top: 350px;
-      right: 120px;
-      width: 55px;
-      height: 45px;
-      background: rgba(60, 35, 15, 0.3);
-      border-radius: 60% 40% 50% 50% / 30% 50% 50% 70%;
-      transform: rotate(30deg);
-      filter: blur(4px);
-      box-shadow: 0 0 12px rgba(60, 35, 15, 0.15);
-      pointer-events: none;
-      z-index: 3;
-    }
-
-    /* СЛЕДЫ ОТ ВОДЫ - ИСПРАВЛЕНО позиционирование */
-    .water-stain-1 {
-      position: absolute;
-      top: 150px;
-      left: 200px;
-      width: 180px;
-      height: 90px;
-      background: radial-gradient(ellipse, rgba(140, 100, 60, 0.2) 0%, transparent 80%);
-      border-radius: 50% 40% 60% 40% / 40% 60% 40% 60%;
-      filter: blur(15px);
-      transform: rotate(-5deg);
-      pointer-events: none;
-      z-index: 1;
-    }
-
-    .water-stain-2 {
-      position: absolute;
-      bottom: 200px;
-      right: 150px;
-      width: 200px;
-      height: 100px;
-      background: radial-gradient(circle, rgba(120, 80, 40, 0.15) 0%, transparent 80%);
-      border-radius: 40% 60% 50% 50% / 60% 40% 60% 40%;
-      filter: blur(18px);
-      transform: rotate(8deg);
-      pointer-events: none;
-      z-index: 1;
-    }
-
-    /* ПОРВАННЫЙ КРАЙ - ИСПРАВЛЕНО */
-    .tear-edge {
-      position: absolute;
-      top: -5px;
-      left: 0;
-      width: 100%;
-      height: 25px;
-      background: linear-gradient(135deg, 
-        transparent 15%, 
-        rgba(100, 50, 20, 0.25) 25%,
-        transparent 35%,
-        rgba(80, 40, 15, 0.2) 45%,
-        transparent 55%,
-        rgba(90, 45, 20, 0.15) 65%,
-        transparent 75%,
-        rgba(70, 35, 10, 0.1) 85%,
-        transparent 95%
-      );
-      filter: blur(3px);
-      pointer-events: none;
-      z-index: 5;
-      border-top-left-radius: 30px;
-      border-top-right-radius: 30px;
-    }
-
-    /* Затемнение по краям для эффекта пергамента */
-    .paper-background::after {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      box-shadow: inset 0 0 50px rgba(60, 30, 10, 0.3);
-      border-radius: 30px;
-      pointer-events: none;
-      z-index: 4;
-    }
-
-    /* КОНТЕНТ, КОТОРЫЙ ПОЯВЛЯЕТСЯ ПОСЛЕ ЗАБЕЛИВАНИЯ */
-    .hidden-content {
+      margin-top: 40px;
       opacity: 0;
       visibility: hidden;
       transition: opacity 2s ease, visibility 2s ease;
-      position: relative;
+      min-height: 600px;
+      border-radius: 30px;
+      overflow: hidden;
     }
 
-    .hidden-content.visible {
+    .dimensions-container.visible {
       opacity: 1;
       visibility: visible;
-      animation: paperReveal 2s ease-out forwards;
     }
 
-    .hidden-content .paper-background {
-      animation: paperReveal 2s ease-out forwards;
+    .dimensions-background {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: #0a0515;
+      z-index: 0;
     }
 
-    .hidden-content .timeline-section,
-    .hidden-content .bio,
-    .hidden-content .info-row,
-    .hidden-content footer {
-      animation: fadeInUp 1.5s ease forwards;
-      opacity: 0;
+    .portal {
+      position: absolute;
+      width: 500px;
+      height: 500px;
+      border-radius: 50%;
+      filter: blur(60px);
+      animation: portalPulse 8s infinite ease-in-out;
+      opacity: 0.5;
+      mix-blend-mode: screen;
+    }
+
+    .portal-1 {
+      top: -150px;
+      left: -150px;
+      background: radial-gradient(circle, #ff00aa 0%, #4a1a6a 70%);
+      animation-delay: 0s;
+    }
+
+    .portal-2 {
+      bottom: -150px;
+      right: -150px;
+      background: radial-gradient(circle, #00aaff 0%, #1a4a6a 70%);
+      animation-delay: 2s;
+    }
+
+    .portal-3 {
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(circle, #aa00ff 0%, #2a1a4a 70%);
+      animation-delay: 4s;
+      opacity: 0.3;
+    }
+
+    @keyframes portalPulse {
+      0%, 100% { 
+        transform: scale(1); 
+        opacity: 0.4;
+        filter: blur(60px);
+      }
+      50% { 
+        transform: scale(1.3); 
+        opacity: 0.7;
+        filter: blur(50px);
+      }
+    }
+
+    .rift {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 100%;
+      height: 3px;
+      background: linear-gradient(90deg, 
+        transparent, 
+        #fff, 
+        #a57fcf, 
+        #ff6a9a, 
+        #6a9aff, 
+        #a57fcf, 
+        #fff, 
+        transparent
+      );
+      filter: blur(3px);
+      animation: riftMove 12s infinite linear;
+      box-shadow: 0 0 50px #a57fcf;
+      z-index: 1;
+    }
+
+    .rift-vertical {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 3px;
+      height: 100%;
+      background: linear-gradient(180deg, 
+        transparent, 
+        #fff, 
+        #a57fcf, 
+        #ff6a9a, 
+        #6a9aff, 
+        #a57fcf, 
+        #fff, 
+        transparent
+      );
+      filter: blur(3px);
+      animation: riftMoveVertical 12s infinite linear;
+      box-shadow: 0 0 50px #a57fcf;
+      z-index: 1;
+    }
+
+    @keyframes riftMove {
+      0% { transform: translate(-50%, -50%) rotate(0deg); }
+      100% { transform: translate(-50%, -50%) rotate(360deg); }
+    }
+
+    @keyframes riftMoveVertical {
+      0% { transform: translate(-50%, -50%) rotate(0deg); }
+      100% { transform: translate(-50%, -50%) rotate(-360deg); }
+    }
+
+    .quantum-particle {
+      position: absolute;
+      width: 4px;
+      height: 4px;
+      background: #cfb5ff;
+      border-radius: 50%;
+      box-shadow: 0 0 20px #a57fcf;
+      animation: particleFly 15s infinite linear;
+      opacity: 0.6;
+      z-index: 1;
+    }
+
+    @keyframes particleFly {
+      0% { 
+        transform: translate(0, 0) scale(1);
+        opacity: 0.6;
+      }
+      100% { 
+        transform: translate(1000px, -500px) scale(0);
+        opacity: 0;
+      }
+    }
+
+    /* Контент поверх фона */
+    .content-overlay {
       position: relative;
       z-index: 10;
+      background: transparent;
+      border-radius: 30px;
+      padding: 30px;
     }
 
-    .hidden-content.visible .timeline-section { animation-delay: 0.3s; }
-    .hidden-content.visible .bio { animation-delay: 0.6s; }
-    .hidden-content.visible .info-row { animation-delay: 0.9s; }
-    .hidden-content.visible footer { animation-delay: 1.2s; }
-
-    /* Цвета для текста на старой бумаге */
-    .hidden-content .timeline-title {
-      color: #2c1e0e;
-      text-shadow: 0 2px 5px rgba(255, 255, 255, 0.3);
-      font-weight: 700;
-    }
-
-    .hidden-content .timeline-content {
-      background: rgba(210, 180, 140, 0.8);
-      border-color: #6b4b2d;
-      color: #1a0e05;
-      box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-    }
-
-    .hidden-content .timeline-year {
-      color: #2c1e0e;
-      font-weight: 700;
-    }
-
-    .hidden-content .timeline-text {
-      color: #1a0e05;
-    }
-
-    .hidden-content .bio {
-      background: rgba(200, 170, 130, 0.7);
-      border-left-color: #6b4b2d;
-    }
-
-    .hidden-content .bio p {
-      color: #1a0e05;
-      font-weight: 500;
-    }
-
-    .hidden-content .coordinates-section {
-      background: rgba(190, 160, 120, 0.7);
-      border-color: #6b4b2d;
-    }
-
-    .hidden-content .coordinates-title {
-      color: #2c1e0e;
-      font-weight: 600;
-    }
-
-    .hidden-content .coord {
-      color: #1a0e05;
-      font-weight: 600;
-    }
-
-    .hidden-content .coord-sep {
-      color: #4a3a2a;
-    }
-
-    .hidden-content .caption-text {
-      color: #2c1e0e;
-      font-weight: 500;
-    }
-
-    .hidden-content .qr-section {
-      background: rgba(180, 150, 110, 0.8);
-      border-color: #6b4b2d;
-    }
-
-    .hidden-content .qr-label {
-      color: #2c1e0e;
-      font-weight: 600;
-    }
-
-    .hidden-content .qr-hint {
-      color: #2c1e0e;
-      font-weight: 500;
-    }
-
-    .hidden-content footer {
-      border-top-color: #6b4b2d;
-    }
-
-    .hidden-content .memorial-message {
-      background: rgba(160, 120, 80, 0.4);
-      border-left-color: #6b4b2d;
-      border-right-color: #6b4b2d;
-    }
-
-    .hidden-content .message-text {
-      color: #2c1e0e;
-      font-weight: 600;
-      text-shadow: 0 1px 3px rgba(255, 255, 255, 0.3);
-    }
-
-    .hidden-content .footer-bottom {
-      color: #2c1e0e;
-      font-weight: 500;
-    }
-
-    .hidden-content .memorial-sign {
-      color: #4a3a2a;
-      font-weight: 600;
-    }
-
-    .hidden-content .coordinates-button {
-      color: #1a0e05;
-      font-weight: 600;
-      background: rgba(140, 100, 60, 0.4);
-      border: 1px solid #6b4b2d;
-    }
-
-    .hidden-content .coordinates-button:hover {
-      background: rgba(160, 120, 80, 0.5);
-    }
-
-    /* ХРОНОЛОГИЯ ЖИЗНИ */
+    /* ВАШ ОРИГИНАЛЬНЫЙ КОНТЕНТ - ПОЛНОСТЬЮ СОХРАНЕН */
     .timeline-section {
       margin: 50px 0 40px;
       scroll-margin-top: 30px;
@@ -811,6 +646,7 @@
       font-size: 32px;
       margin-bottom: 40px;
       letter-spacing: 2px;
+      color: #ffffff;
     }
 
     .timeline {
@@ -852,12 +688,13 @@
       border: 1px solid;
       box-shadow: 0 5px 20px rgba(0,0,0,0.3);
       transition: transform 0.3s ease;
+      background: rgba(10, 14, 19, 0.8);
+      border-color: #3e5266;
+      color: #ecf0f5;
     }
 
     .timeline-content:hover {
       transform: scale(1.02);
-      border-color: #a07d5a;
-      box-shadow: 0 5px 30px rgba(100, 50, 20, 0.3);
     }
 
     .timeline-year {
@@ -865,11 +702,13 @@
       font-size: 28px;
       font-weight: 600;
       margin-bottom: 10px;
+      color: #ffd700;
     }
 
     .timeline-text {
       font-size: 18px;
       line-height: 1.6;
+      color: #ecf0f5;
     }
 
     .timeline-dot {
@@ -890,8 +729,8 @@
       margin: 40px 0;
       padding: 30px;
       border-radius: 20px;
-      border-left: 3px solid;
-      scroll-margin-top: 30px;
+      border-left: 3px solid #ffd700;
+      background: rgba(10, 14, 19, 0.8);
     }
 
     .bio p {
@@ -901,6 +740,7 @@
       line-height: 1.8;
       white-space: pre-line;
       min-height: 200px;
+      color: #ecf0f5;
     }
 
     /* КООРДИНАТЫ И QR В ОДНОМ РЯДУ */
@@ -921,8 +761,9 @@
       display: flex;
       align-items: center;
       gap: 20px;
-      border: 2px solid;
+      border: 2px solid #3e5266;
       flex-wrap: wrap;
+      background: rgba(10, 14, 19, 0.8);
     }
 
     .coordinates-icon {
@@ -944,48 +785,55 @@
       font-family: 'Great Vibes', cursive;
       font-size: 28px;
       margin-bottom: 15px;
+      color: #ffd700;
     }
 
     .coordinates-display {
       background: rgba(0, 0, 0, 0.5);
-      padding: 15px 20px;
-      border-radius: 50px;
+      padding: 12px 18px;
+      border-radius: 40px;
       display: inline-flex;
       margin-bottom: 15px;
-      border: 1px solid;
+      border: 1px solid #4a5c6e;
     }
 
     .coord {
       font-family: 'EB Garamond', monospace;
       font-size: 22px;
       letter-spacing: 2px;
+      color: #ffffff;
     }
 
     .coord-sep {
-      font-size: 26px;
-      margin: 0 8px;
+      font-size: 24px;
+      margin: 0 5px;
+      color: #9bc3eb;
     }
 
     .caption-text {
       font-family: 'Great Vibes', cursive;
       font-size: 24px;
       margin: 10px 0 15px;
+      color: #cde1f2;
     }
 
     .coordinates-button {
       display: inline-flex;
       align-items: center;
       gap: 10px;
-      padding: 12px 25px;
+      padding: 10px 20px;
       border-radius: 40px;
       font-size: 18px;
+      border: 1px solid #3e5266;
+      text-decoration: none;
       transition: all 0.3s ease;
-      font-weight: 600;
+      background: rgba(60, 90, 120, 0.5);
+      color: #ffffff;
     }
 
     .coordinates-button:hover {
       transform: translateY(-3px);
-      box-shadow: 0 5px 20px rgba(100, 50, 20, 0.3);
+      background: rgba(80, 120, 160, 0.7);
     }
 
     .button-icon {
@@ -999,17 +847,19 @@
       border-radius: 24px;
       padding: 30px;
       text-align: center;
-      border: 2px solid;
+      border: 2px solid #3e5266;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
+      background: rgba(10, 14, 19, 0.8);
     }
 
     .qr-label {
       font-family: 'Great Vibes', cursive;
       font-size: 28px;
       margin-bottom: 20px;
+      color: #ffd700;
     }
 
     .qr-frame {
@@ -1017,7 +867,7 @@
       padding: 10px;
       background: rgba(255, 255, 255, 0.1);
       border-radius: 16px;
-      border: 1px solid #6b4b2d;
+      border: 1px solid #3e5266;
     }
 
     .qr-frame img {
@@ -1030,36 +880,35 @@
 
     .qr-hint {
       margin-top: 15px;
-      font-family: 'Cormorant Garamond', serif;
       font-size: 16px;
       font-style: italic;
+      color: #c0d4e8;
     }
 
     /* ПОДВАЛ */
     footer {
       margin-top: 50px;
       padding-top: 30px;
-      border-top: 2px solid;
+      border-top: 2px solid #c09b5e;
       scroll-margin-top: 30px;
     }
 
     .memorial-message {
       text-align: center;
       padding: 25px;
-      background: rgba(160, 120, 80, 0.4);
+      background: rgba(70, 90, 110, 0.2);
       border-radius: 20px;
-      border-left: 4px solid #6b4b2d;
-      border-right: 4px solid #6b4b2d;
+      border-left: 4px solid #aac8e0;
+      border-right: 4px solid #aac8e0;
       margin-bottom: 25px;
-      box-shadow: inset 0 0 20px rgba(100, 50, 20, 0.2);
     }
 
     .message-text {
       font-family: 'Great Vibes', cursive;
       font-size: clamp(26px, 4vw, 32px);
       line-height: 1.5;
-      text-shadow: 0 2px 5px rgba(255, 255, 255, 0.3);
       font-weight: 600;
+      color: #ffffff;
     }
 
     .footer-bottom {
@@ -1069,13 +918,14 @@
       font-style: italic;
       flex-wrap: wrap;
       gap: 15px;
+      color: #b4cce3;
     }
 
     .memorial-sign {
       font-size: 14px;
       letter-spacing: 3px;
       text-transform: uppercase;
-      font-weight: 600;
+      color: #c8def5;
     }
 
     /* АДАПТАЦИЯ */
@@ -1087,12 +937,6 @@
       .timeline-content { width: 80%; margin-left: 60px; }
       .timeline-dot { left: 30px; }
       .info-row { grid-template-columns: 1fr; }
-      
-      .wear-mark-1, .wear-mark-2, .wear-mark-3,
-      .ink-blot-1, .ink-blot-2, .ink-blot-3,
-      .water-stain-1, .water-stain-2 {
-        opacity: 0.5;
-      }
     }
 
     @media screen and (max-width: 750px) {
@@ -1104,21 +948,13 @@
       .avatar { width: 130px; height: 130px; flex: 0 0 130px; }
       .candle-button { padding: 10px 20px; }
       .candle-button-text { font-size: 16px; }
-      .candle-button-icon { font-size: 20px; }
       .timeline-content { width: 85%; margin-left: 50px; padding: 15px; }
       .timeline-year { font-size: 22px; }
       .timeline-text { font-size: 16px; }
       .coordinates-section { flex-direction: column; text-align: center; }
-      .paper-background { padding: 15px; }
-      
-      .wear-mark-1, .wear-mark-2, .wear-mark-3,
-      .ink-blot-1, .ink-blot-2, .ink-blot-3,
-      .water-stain-1, .water-stain-2 {
-        opacity: 0.3;
-      }
     }
 
-    /* Аудио плеер (скрыт) */
+    /* Аудио плеер */
     #bioAudio {
       display: none;
     }
@@ -1134,7 +970,7 @@
   <!-- ЗАБЕЛИВАНИЕ -->
   <div class="white-overlay" id="whiteOverlay"></div>
   
-  <!-- Скрытый аудио плеер -->
+  <!-- Аудио -->
   <audio id="bioAudio" preload="auto">
     <source src="https://github.com/levsergeevich324-prog/mem/raw/main/voice4.mp3" type="audio/mpeg">
     Ваш браузер не поддерживает аудио.
@@ -1142,7 +978,7 @@
 
   <div class="wrap">
       
-      <!-- ШАПКА С КНОПКОЙ И СЧЕТЧИКОМ -->
+      <!-- ШАПКА С КНОПКОЙ И СЧЕТЧИКОМ (видна при заходе) -->
       <div class="header-top" id="headerTop">
         <div class="candle-counter" id="candleCounter">
           <span class="counter-icon">🕯️</span>
@@ -1156,7 +992,7 @@
         </button>
       </div>
       
-      <!-- ШАПКА С ФОТО -->
+      <!-- ШАПКА С ФОТО (видна при заходе) -->
       <header class="main-header" id="mainHeader">
         <div class="avatar">
           <img id="photo" src="photo.jpg" alt="Фотография Мили Илларионовны">
@@ -1174,7 +1010,7 @@
         </div>
       </header>
 
-      <!-- ВИДЕО -->
+      <!-- ВИДЕО (видно сразу) -->
       <section class="video-section" id="videoSection">
         <div class="video-wrapper">
           <video id="videoPlayer" 
@@ -1190,27 +1026,31 @@
         </div>
       </section>
 
-      <!-- КОНТЕНТ, КОТОРЫЙ ПОЯВЛЯЕТСЯ ПОСЛЕ ЗАБЕЛИВАНИЯ (СТАРАЯ БУМАГА) -->
-      <div class="hidden-content" id="hiddenContent">
+      <!-- КОНТЕНТ С ФОНОМ ИЗМЕРЕНИЙ (появляется после забеливания) -->
+      <div class="dimensions-container" id="dimensionsContainer">
+        <div class="dimensions-background">
+          <!-- ПОРТАЛЫ -->
+          <div class="portal portal-1"></div>
+          <div class="portal portal-2"></div>
+          <div class="portal portal-3"></div>
+          
+          <!-- РАЗЛОМЫ -->
+          <div class="rift"></div>
+          <div class="rift-vertical"></div>
+          
+          <!-- КВАНТОВЫЕ ЧАСТИЦЫ -->
+          <div class="quantum-particle" style="top: 20%; left: 10%; animation-delay: 0s;"></div>
+          <div class="quantum-particle" style="top: 70%; left: 80%; animation-delay: 2s;"></div>
+          <div class="quantum-particle" style="top: 40%; left: 30%; animation-delay: 4s;"></div>
+          <div class="quantum-particle" style="top: 80%; left: 20%; animation-delay: 6s;"></div>
+          <div class="quantum-particle" style="top: 30%; left: 60%; animation-delay: 8s;"></div>
+          <div class="quantum-particle" style="top: 60%; left: 40%; animation-delay: 10s;"></div>
+        </div>
         
-        <!-- КОНТЕЙНЕР СО СТАРОЙ БУМАГОЙ -->
-        <div class="paper-background">
+        <!-- ВАШ ОРИГИНАЛЬНЫЙ КОНТЕНТ ПОВЕРХ ФОНА -->
+        <div class="content-overlay">
           
-          <!-- ЭЛЕМЕНТЫ СТАРИНЫ -->
-          <div class="wear-mark-1"></div>
-          <div class="wear-mark-2"></div>
-          <div class="wear-mark-3"></div>
-          
-          <div class="ink-blot-1"></div>
-          <div class="ink-blot-2"></div>
-          <div class="ink-blot-3"></div>
-          
-          <div class="water-stain-1"></div>
-          <div class="water-stain-2"></div>
-          
-          <div class="tear-edge"></div>
-          
-          <!-- ХРОНОЛОГИЯ ЖИЗНИ -->
+          <!-- ХРОНОЛОГИЯ ЖИЗНИ (ВАША, БЕЗ ИЗМЕНЕНИЙ) -->
           <section class="timeline-section" id="timeline">
             <h2 class="timeline-title">Хронология жизни</h2>
             <div class="timeline">
@@ -1280,12 +1120,12 @@
             </div>
           </section>
 
-          <!-- БИОГРАФИЯ С ПЕЧАТАЮЩИМСЯ ТЕКСТОМ -->
+          <!-- БИОГРАФИЯ С ПЕЧАТАЮЩИМСЯ ТЕКСТОМ (ВАША, БЕЗ ИЗМЕНЕНИЙ) -->
           <section class="bio" id="bio">
             <p id="typing-text"></p>
           </section>
 
-          <!-- КООРДИНАТЫ И QR В ОДНОМ РЯДУ -->
+          <!-- КООРДИНАТЫ И QR В ОДНОМ РЯДУ (ВАШИ, БЕЗ ИЗМЕНЕНИЙ) -->
           <div class="info-row" id="info">
             <!-- КООРДИНАТЫ МОГИЛЫ -->
             <section class="coordinates-section"> 
@@ -1319,7 +1159,7 @@
             </div>
           </div>
 
-          <!-- ПОДВАЛ С ПАМЯТНЫМИ СЛОВАМИ -->
+          <!-- ПОДВАЛ С ПАМЯТНЫМИ СЛОВАМИ (ВАШ, БЕЗ ИЗМЕНЕНИЙ) -->
           <footer id="footer">
             <div class="memorial-message">
               <p class="message-text">"Когда уходят хорошие люди, на небе зажигается новая звезда. Теперь их стало больше, а нам светлее..."</p>
@@ -1330,8 +1170,8 @@
             </div>
           </footer>
           
-        </div> <!-- Закрытие paper-background -->
-      </div> <!-- Закрытие hidden-content -->
+        </div> <!-- Закрытие content-overlay -->
+      </div> <!-- Закрытие dimensions-container -->
 
   </div> <!-- Закрытие wrap -->
 
@@ -1478,17 +1318,12 @@
       const audio = document.getElementById('bioAudio');
       if (!audio) return;
       
-      // Сбрасываем аудио на начало, если оно уже играло
       audio.currentTime = 0;
-      
-      // Пытаемся воспроизвести
       const playPromise = audio.play();
       
       if (playPromise !== undefined) {
         playPromise.catch(error => {
           console.log('Автовоспроизведение аудио не удалось:', error);
-          // Если не получилось, покажем сообщение
-          alert('Нажмите ещё раз для воспроизведения аудио');
         });
       }
     }
@@ -1503,7 +1338,7 @@
       const mainHeader = document.getElementById('mainHeader');
       const daysCounter = document.getElementById('daysCounter');
       const videoSection = document.getElementById('videoSection');
-      const hiddenContent = document.getElementById('hiddenContent');
+      const dimensionsContainer = document.getElementById('dimensionsContainer');
       const starsContainer = document.getElementById('stars');
       
       if (!candleButton || !candleEffect || !whiteOverlay || !counterText) {
@@ -1542,15 +1377,11 @@
       candleButton.addEventListener('click', function(e) {
         console.log('Biography button clicked!');
         
-        // Увеличиваем счетчик
         candleCount++;
         counterText.textContent = candleCount;
         localStorage.setItem('candleCount', candleCount);
         
-        // Эффект свечи
         candleEffect.classList.add('active');
-        
-        // Искорки
         createSparks();
         
         if (navigator.vibrate) {
@@ -1567,32 +1398,24 @@
         setTimeout(() => {
           console.log('White overlay activated');
           whiteOverlay.classList.add('active');
-          // Звёзды начинают исчезать во время забеливания
           starsContainer.classList.add('fade-out');
         }, 3000);
         
-        // 3. Появление остального контента через 8 секунд
+        // 3. Появление контента с фоном измерений через 8 секунд
         setTimeout(() => {
-          console.log('Showing hidden content');
+          console.log('Showing dimensions background');
           whiteOverlay.classList.remove('active');
           candleEffect.classList.remove('active');
           
-          // Показываем скрытый контент
-          hiddenContent.classList.add('visible');
+          dimensionsContainer.classList.add('visible');
           
-          // Запускаем печать текста
           typeWriter();
-          
-          // Запускаем аудио с биографией
           playBiographyAudio();
-          
-          // Запускаем плавный скролл к хронологии
           smoothScrollToTimeline();
           
         }, 8000);
       });
       
-      // Двойной клик для сброса
       candleButton.addEventListener('dblclick', function(e) {
         e.stopPropagation();
         candleCount = 0;
