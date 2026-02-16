@@ -49,29 +49,32 @@
       }
     }
 
-    /* Эффект появления звезды */
-    @keyframes starGrow {
+    /* Эффект забеливания */
+    @keyframes whiteOut {
       0% { 
-        opacity: 0; 
-        transform: scale(0.5) translate(-50%, -50%);
-        box-shadow: 0 0 50px rgba(255, 215, 0, 0.2);
+        opacity: 0;
+        background: radial-gradient(circle at center, rgba(255, 255, 255, 0) 0%, transparent 100%);
       }
       50% { 
-        opacity: 0.8; 
-        transform: scale(1.5) translate(-50%, -50%);
-        box-shadow: 0 0 150px rgba(255, 215, 0, 0.8);
+        opacity: 0.5;
+        background: radial-gradient(circle at center, rgba(255, 255, 255, 0.5) 0%, transparent 70%);
       }
       100% { 
-        opacity: 1; 
-        transform: scale(2) translate(-50%, -50%);
-        box-shadow: 0 0 250px rgba(255, 255, 255, 1);
+        opacity: 1;
+        background: white;
       }
     }
 
-    /* Эффект забеливания */
-    @keyframes whiteOut {
-      0% { opacity: 0; }
-      100% { opacity: 1; }
+    /* Эффект появления контента */
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(50px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
 
     /* Эффект печатающегося текста */
@@ -155,11 +158,43 @@
       animation: candleFlicker 3s infinite ease-in-out;
     }
 
+    /* Забеливание */
+    .white-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 300;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 2s ease;
+    }
+
+    .white-overlay.active {
+      opacity: 1;
+      animation: whiteOut 3s ease-in-out forwards;
+    }
+
+    /* ШАПКА (видна при заходе) */
+    .header-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+      gap: 15px;
+      opacity: 1;
+      transition: opacity 1s ease;
+    }
+
+    .header-top.hidden {
+      opacity: 0;
+      pointer-events: none;
+    }
+
     /* Счетчик свечей */
     .candle-counter {
-      position: fixed;
-      top: 20px;
-      right: 20px;
       background: rgba(20, 30, 40, 0.85);
       backdrop-filter: blur(5px);
       -webkit-backdrop-filter: blur(5px);
@@ -169,14 +204,7 @@
       display: flex;
       align-items: center;
       gap: 10px;
-      z-index: 100;
       box-shadow: 0 4px 15px rgba(0,0,0,0.3);
-      transition: all 0.5s ease;
-    }
-
-    .candle-counter.hidden {
-      opacity: 0;
-      pointer-events: none;
     }
 
     .counter-icon {
@@ -198,20 +226,6 @@
       text-align: center;
     }
 
-    /* Контейнер для кнопки */
-    .candle-button-container {
-      text-align: center;
-      margin: 20px 0 30px;
-      padding: 15px 0;
-      transition: opacity 1s ease, transform 1s ease;
-    }
-
-    .candle-button-container.hidden {
-      opacity: 0;
-      transform: translateY(-50px);
-      pointer-events: none;
-    }
-
     /* Кнопка зажечь свечу */
     .candle-button {
       background: linear-gradient(135deg, rgba(40, 25, 15, 0.9) 0%, rgba(60, 30, 10, 0.9) 100%);
@@ -219,10 +233,10 @@
       -webkit-backdrop-filter: blur(5px);
       border: 2px solid rgba(255, 150, 50, 0.3);
       border-radius: 60px;
-      padding: 18px 50px;
+      padding: 12px 30px;
       display: inline-flex;
       align-items: center;
-      gap: 15px;
+      gap: 10px;
       cursor: pointer;
       transition: all 0.3s ease;
       box-shadow: 0 4px 20px rgba(0,0,0,0.4);
@@ -259,7 +273,7 @@
     }
 
     .candle-button-icon {
-      font-size: 28px;
+      font-size: 24px;
       animation: gentleFlicker 2s infinite ease-in-out;
       position: relative;
       z-index: 2;
@@ -267,7 +281,7 @@
 
     .candle-button-text {
       font-family: 'Cormorant Garamond', serif;
-      font-size: 22px;
+      font-size: 18px;
       font-weight: 500;
       color: #ffb347;
       letter-spacing: 1px;
@@ -285,7 +299,7 @@
       filter: drop-shadow(0 0 5px rgba(255, 150, 50, 0.8));
     }
 
-    /* ===== ОСНОВНОЙ КОНТЕНТ ===== */
+    /* ===== ОСНОВНОЙ КОНТЕНТ (скрыт при заходе) ===== */
     .wrap {
       width: 100%;
       max-width: 1200px;
@@ -306,17 +320,10 @@
       position: relative;
       z-index: 25;
       width: 100%;
-      transition: opacity 1s ease, transform 1s ease;
     }
 
-    .card.hidden {
-      opacity: 0;
-      transform: scale(0.95);
-      pointer-events: none;
-    }
-
-    /* ШАПКА */
-    header {
+    /* ШАПКА С ФОТО (видна при заходе) */
+    .main-header {
       display: flex;
       gap: 30px;
       align-items: center;
@@ -324,6 +331,13 @@
       padding-bottom: 25px;
       border-bottom: 1px solid rgba(200, 215, 230, 0.15);
       flex-wrap: wrap;
+      opacity: 1;
+      transition: opacity 1s ease;
+    }
+
+    .main-header.hidden {
+      opacity: 0;
+      pointer-events: none;
     }
 
     .avatar {
@@ -407,7 +421,7 @@
       transform: translateX(-50%) translateY(0);
     }
 
-    /* Счетчик дней */
+    /* Счетчик дней (виден при заходе) */
     .days-counter {
       margin-top: 15px;
       font-family: 'EB Garamond', serif;
@@ -418,6 +432,12 @@
       border-radius: 40px;
       display: inline-block;
       border: 1px solid #4a5c6e;
+      transition: opacity 1s ease;
+    }
+
+    .days-counter.hidden {
+      opacity: 0;
+      pointer-events: none;
     }
 
     .days-number {
@@ -427,47 +447,36 @@
       margin: 0 5px;
     }
 
-    /* БИОГРАФИЯ */
-    .bio {
-      margin: 40px 0;
-      background: rgba(0, 0, 0, 0.2);
-      padding: 30px;
-      border-radius: 20px;
-      border-left: 3px solid #ffd700;
+    /* ===== КОНТЕНТ, КОТОРЫЙ ПОЯВЛЯЕТСЯ ПОСЛЕ ЗАБЕЛИВАНИЯ ===== */
+    .hidden-content {
       opacity: 0;
-      transform: translateY(50px);
-      transition: opacity 1s ease, transform 1s ease;
+      visibility: hidden;
+      transition: opacity 1s ease, visibility 1s ease;
     }
 
-    .bio.visible {
+    .hidden-content.visible {
       opacity: 1;
-      transform: translateY(0);
+      visibility: visible;
     }
 
-    .bio p {
-      font-size: clamp(16px, 2.2vw, 18px);
-      color: #ecf0f5;
-      margin-bottom: 15px;
-      text-align: left;
-      line-height: 1.8;
-      text-shadow: 0 1px 4px rgba(0,0,0,0.4);
-      white-space: pre-line;
-      min-height: 200px;
+    .hidden-content .timeline-section,
+    .hidden-content .video-section,
+    .hidden-content .bio,
+    .hidden-content .info-row,
+    .hidden-content footer {
+      animation: fadeInUp 1s ease forwards;
+      opacity: 0;
     }
 
-    /* ===== ХРОНОЛОГИЯ ЖИЗНИ ===== */
+    .hidden-content.visible .timeline-section { animation-delay: 0.2s; }
+    .hidden-content.visible .video-section { animation-delay: 0.4s; }
+    .hidden-content.visible .bio { animation-delay: 0.6s; }
+    .hidden-content.visible .info-row { animation-delay: 0.8s; }
+    .hidden-content.visible footer { animation-delay: 1s; }
+
+    /* ХРОНОЛОГИЯ ЖИЗНИ */
     .timeline-section {
       margin: 50px 0 40px;
-      opacity: 0;
-      transform: translateY(100px);
-      transition: opacity 1.5s ease, transform 1.5s ease;
-      pointer-events: none;
-    }
-
-    .timeline-section.visible {
-      opacity: 1;
-      transform: translateY(0);
-      pointer-events: auto;
     }
 
     .timeline-title {
@@ -504,24 +513,7 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      opacity: 0;
-      transform: translateY(50px);
-      transition: all 0.8s ease;
     }
-
-    .timeline-section.visible .timeline-item {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    .timeline-section.visible .timeline-item:nth-child(1) { transition-delay: 0.2s; }
-    .timeline-section.visible .timeline-item:nth-child(2) { transition-delay: 0.4s; }
-    .timeline-section.visible .timeline-item:nth-child(3) { transition-delay: 0.6s; }
-    .timeline-section.visible .timeline-item:nth-child(4) { transition-delay: 0.8s; }
-    .timeline-section.visible .timeline-item:nth-child(5) { transition-delay: 1.0s; }
-    .timeline-section.visible .timeline-item:nth-child(6) { transition-delay: 1.2s; }
-    .timeline-section.visible .timeline-item:nth-child(7) { transition-delay: 1.4s; }
-    .timeline-section.visible .timeline-item:nth-child(8) { transition-delay: 1.6s; }
 
     .timeline-item:nth-child(odd) {
       flex-direction: row-reverse;
@@ -575,14 +567,6 @@
     /* ВИДЕО */
     .video-section {
       margin: 50px 0;
-      opacity: 0;
-      transform: translateY(100px);
-      transition: opacity 1.5s ease, transform 1.5s ease;
-    }
-
-    .video-section.visible {
-      opacity: 1;
-      transform: translateY(0);
     }
 
     .video-wrapper {
@@ -603,20 +587,32 @@
       max-height: 450px;
     }
 
+    /* БИОГРАФИЯ */
+    .bio {
+      margin: 40px 0;
+      background: rgba(0, 0, 0, 0.2);
+      padding: 30px;
+      border-radius: 20px;
+      border-left: 3px solid #ffd700;
+    }
+
+    .bio p {
+      font-size: clamp(16px, 2.2vw, 18px);
+      color: #ecf0f5;
+      margin-bottom: 15px;
+      text-align: left;
+      line-height: 1.8;
+      text-shadow: 0 1px 4px rgba(0,0,0,0.4);
+      white-space: pre-line;
+      min-height: 200px;
+    }
+
     /* КООРДИНАТЫ И QR В ОДНОМ РЯДУ */
     .info-row {
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 30px;
       margin: 50px 0;
-      opacity: 0;
-      transform: translateY(50px);
-      transition: opacity 1s ease, transform 1s ease;
-    }
-
-    .info-row.visible {
-      opacity: 1;
-      transform: translateY(0);
     }
 
     /* КООРДИНАТЫ */
@@ -756,14 +752,6 @@
       margin-top: 50px;
       padding-top: 30px;
       border-top: 2px solid #c09b5e;
-      opacity: 0;
-      transform: translateY(50px);
-      transition: opacity 1s ease, transform 1s ease;
-    }
-
-    footer.visible {
-      opacity: 1;
-      transform: translateY(0);
     }
 
     .memorial-message {
@@ -801,46 +789,6 @@
       color: #c09b5e;
     }
 
-    /* ЯРКАЯ ЗВЕЗДА */
-    .bright-star {
-      position: fixed;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      width: 10px;
-      height: 10px;
-      background: radial-gradient(circle, #ffffff, #ffd700);
-      border-radius: 50%;
-      z-index: 250;
-      opacity: 0;
-      pointer-events: none;
-      transition: opacity 0.5s ease;
-    }
-
-    .bright-star.active {
-      opacity: 1;
-      animation: starGrow 8s ease-in-out forwards;
-    }
-
-    /* ЗАБЕЛИВАНИЕ */
-    .white-overlay {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: white;
-      z-index: 300;
-      opacity: 0;
-      pointer-events: none;
-      transition: opacity 2s ease;
-    }
-
-    .white-overlay.active {
-      opacity: 1;
-      animation: whiteOut 3s ease-in-out;
-    }
-
     /* АДАПТАЦИЯ */
     @media screen and (max-width: 900px) {
       .timeline::before { left: 30px; }
@@ -853,16 +801,16 @@
     }
 
     @media screen and (max-width: 750px) {
-      .candle-counter { top: 10px; right: 10px; padding: 8px 15px; }
+      .header-top { flex-direction: column; align-items: flex-start; }
     }
 
     @media screen and (max-width: 480px) {
       .card { padding: 20px 15px; }
-      header { flex-direction: column; text-align: center; }
+      .main-header { flex-direction: column; text-align: center; }
       .avatar { width: 130px; height: 130px; flex: 0 0 130px; }
-      .candle-button { padding: 12px 30px; }
-      .candle-button-text { font-size: 18px; }
-      .candle-button-icon { font-size: 22px; }
+      .candle-button { padding: 10px 20px; }
+      .candle-button-text { font-size: 16px; }
+      .candle-button-icon { font-size: 20px; }
       .timeline-content { width: 85%; margin-left: 50px; padding: 15px; }
       .timeline-year { font-size: 22px; }
       .timeline-text { font-size: 16px; }
@@ -877,23 +825,27 @@
   <!-- ЭФФЕКТ СВЕЧИ -->
   <div class="candle-effect" id="candleEffect"></div>
   
-  <!-- ЯРКАЯ ЗВЕЗДА -->
-  <div class="bright-star" id="brightStar"></div>
-  
   <!-- ЗАБЕЛИВАНИЕ -->
   <div class="white-overlay" id="whiteOverlay"></div>
-  
-  <!-- СЧЕТЧИК ЗАЖЖЕННЫХ СВЕЧЕЙ -->
-  <div class="candle-counter" id="candleCounter">
-    <span class="counter-icon">🕯️</span>
-    <span class="counter-text" id="counterText">0</span>
-  </div>
 
   <div class="wrap">
-    <div class="card" id="mainCard">
+    <div class="card">
       
-      <!-- ШАПКА С ФОТО -->
-      <header>
+      <!-- ШАПКА С КНОПКОЙ И СЧЕТЧИКОМ (видна при заходе) -->
+      <div class="header-top" id="headerTop">
+        <div class="candle-counter" id="candleCounter">
+          <span class="counter-icon">🕯️</span>
+          <span class="counter-text" id="counterText">0</span>
+        </div>
+        
+        <button class="candle-button" id="candleButton">
+          <span class="candle-button-icon">🕯️</span>
+          <span class="candle-button-text">Зажечь свечу</span>
+        </button>
+      </div>
+      
+      <!-- ШАПКА С ФОТО (видна при заходе) -->
+      <header class="main-header" id="mainHeader">
         <div class="avatar">
           <img id="photo" src="photo.jpg" alt="Фотография Мили Илларионовны">
         </div>
@@ -910,149 +862,146 @@
         </div>
       </header>
 
-      <!-- КНОПКА ЗАЖЕЧЬ СВЕЧУ -->
-      <div class="candle-button-container" id="candleButtonContainer">
-        <button class="candle-button" id="candleButton">
-          <span class="candle-button-icon">🕯️</span>
-          <span class="candle-button-text">Зажечь свечу</span>
-        </button>
-      </div>
-
-      <!-- ХРОНОЛОГИЯ ЖИЗНИ -->
-      <section class="timeline-section" id="timelineSection">
-        <h2 class="timeline-title">Хронология жизни</h2>
-        <div class="timeline">
-          <div class="timeline-item">
-            <div class="timeline-dot"></div>
-            <div class="timeline-content">
-              <div class="timeline-year">1935</div>
-              <div class="timeline-text">Родилась 11 декабря в городе Вологда</div>
+      <!-- КОНТЕНТ, КОТОРЫЙ ПОЯВЛЯЕТСЯ ПОСЛЕ ЗАБЕЛИВАНИЯ -->
+      <div class="hidden-content" id="hiddenContent">
+        
+        <!-- ХРОНОЛОГИЯ ЖИЗНИ -->
+        <section class="timeline-section">
+          <h2 class="timeline-title">Хронология жизни</h2>
+          <div class="timeline">
+            <div class="timeline-item">
+              <div class="timeline-dot"></div>
+              <div class="timeline-content">
+                <div class="timeline-year">1935</div>
+                <div class="timeline-text">Родилась 11 декабря в городе Вологда</div>
+              </div>
             </div>
-          </div>
-          
-          <div class="timeline-item">
-            <div class="timeline-dot"></div>
-            <div class="timeline-content">
-              <div class="timeline-year">1950-е</div>
-              <div class="timeline-text">Начала трудовую деятельность продавцом</div>
+            
+            <div class="timeline-item">
+              <div class="timeline-dot"></div>
+              <div class="timeline-content">
+                <div class="timeline-year">1950-е</div>
+                <div class="timeline-text">Начала трудовую деятельность продавцом</div>
+              </div>
             </div>
-          </div>
-          
-          <div class="timeline-item">
-            <div class="timeline-dot"></div>
-            <div class="timeline-content">
-              <div class="timeline-year">1960-е</div>
-              <div class="timeline-text">Вышла замуж за Карелина Льва Алексеевича</div>
+            
+            <div class="timeline-item">
+              <div class="timeline-dot"></div>
+              <div class="timeline-content">
+                <div class="timeline-year">1960-е</div>
+                <div class="timeline-text">Вышла замуж за Карелина Льва Алексеевича</div>
+              </div>
             </div>
-          </div>
-          
-          <div class="timeline-item">
-            <div class="timeline-dot"></div>
-            <div class="timeline-content">
-              <div class="timeline-year">1961</div>
-              <div class="timeline-text">Рождение двойняшек — Сергея и Ольги</div>
+            
+            <div class="timeline-item">
+              <div class="timeline-dot"></div>
+              <div class="timeline-content">
+                <div class="timeline-year">1961</div>
+                <div class="timeline-text">Рождение двойняшек — Сергея и Ольги</div>
+              </div>
             </div>
-          </div>
-          
-          <div class="timeline-item">
-            <div class="timeline-dot"></div>
-            <div class="timeline-content">
-              <div class="timeline-year">1973-1991</div>
-              <div class="timeline-text">Работа в горгазе, проверка газового оборудования</div>
+            
+            <div class="timeline-item">
+              <div class="timeline-dot"></div>
+              <div class="timeline-content">
+                <div class="timeline-year">1973-1991</div>
+                <div class="timeline-text">Работа в горгазе, проверка газового оборудования</div>
+              </div>
             </div>
-          </div>
-          
-          <div class="timeline-item">
-            <div class="timeline-dot"></div>
-            <div class="timeline-content">
-              <div class="timeline-year">1981</div>
-              <div class="timeline-text">Овдовела</div>
+            
+            <div class="timeline-item">
+              <div class="timeline-dot"></div>
+              <div class="timeline-content">
+                <div class="timeline-year">1981</div>
+                <div class="timeline-text">Овдовела</div>
+              </div>
             </div>
-          </div>
-          
-          <div class="timeline-item">
-            <div class="timeline-dot"></div>
-            <div class="timeline-content">
-              <div class="timeline-year">2000-е</div>
-              <div class="timeline-text">Работа на рынке после пенсии, помощь семье</div>
+            
+            <div class="timeline-item">
+              <div class="timeline-dot"></div>
+              <div class="timeline-content">
+                <div class="timeline-year">2000-е</div>
+                <div class="timeline-text">Работа на рынке после пенсии, помощь семье</div>
+              </div>
             </div>
-          </div>
-          
-          <div class="timeline-item">
-            <div class="timeline-dot"></div>
-            <div class="timeline-content">
-              <div class="timeline-year">2013</div>
-              <div class="timeline-text">Ушла из жизни 27 марта</div>
+            
+            <div class="timeline-item">
+              <div class="timeline-dot"></div>
+              <div class="timeline-content">
+                <div class="timeline-year">2013</div>
+                <div class="timeline-text">Ушла из жизни 27 марта</div>
+              </div>
             </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- ВИДЕО -->
-      <section class="video-section" id="videoSection">
-        <div class="video-wrapper">
-          <video id="video" 
-                 controls 
-                 playsinline 
-                 preload="auto"
-                 muted 
-                 autoplay 
-                 loop>
-            <source src="https://github.com/levsergeevich324-prog/mem/raw/main/video.mp4" type="video/mp4">
-            Ваш браузер не поддерживает видео.
-          </video>
-        </div>
-      </section>
-
-      <!-- БИОГРАФИЯ С ПЕЧАТАЮЩИМСЯ ТЕКСТОМ -->
-      <section class="bio" id="bio">
-        <p id="typing-text"></p>
-      </section>
-
-      <!-- КООРДИНАТЫ И QR В ОДНОМ РЯДУ -->
-      <div class="info-row" id="infoRow">
-        <!-- КООРДИНАТЫ МОГИЛЫ -->
-        <section class="coordinates-section"> 
-          <div class="coordinates-icon">🕊️</div>
-          <div class="coordinates-content">
-            <h3 class="coordinates-title">Место упокоения</h3>
-            <div class="coordinates-display">
-              <span class="coord">59.157658</span>
-              <span class="coord-sep">,</span>
-              <span class="coord">39.910106</span>
-            </div>
-            <div class="coordinates-caption">
-              <span class="caption-text">Земля, хранящая тепло рук...</span>
-            </div>
-            <a href="https://yandex.ru/maps/?ll=39.910106,59.157658&z=16&pt=39.910106,59.157658" 
-               target="_blank" 
-               class="coordinates-button">
-              <span class="button-icon">🗺️</span>
-              Открыть на карте
-            </a>
           </div>
         </section>
 
-        <!-- QR КОД -->
-        <div class="qr-section">
-          <div class="qr-label">Память всегда с вами</div>
-          <div class="qr-frame"> 
-            <img src="https://github.com/levsergeevich324-prog/mem/raw/main/qr2.png" alt="QR-код страницы памяти">
+        <!-- ВИДЕО -->
+        <section class="video-section">
+          <div class="video-wrapper">
+            <video id="video" 
+                   controls 
+                   playsinline 
+                   preload="auto"
+                   muted 
+                   autoplay 
+                   loop>
+              <source src="https://github.com/levsergeevich324-prog/mem/raw/main/video.mp4" type="video/mp4">
+              Ваш браузер не поддерживает видео.
+            </video>
           </div>
-          <div class="qr-hint">Отсканируйте, чтобы открыть страницу</div>
-        </div>
-      </div>
+        </section>
 
-      <!-- ПОДВАЛ С ПАМЯТНЫМИ СЛОВАМИ -->
-      <footer id="footer">
-        <div class="memorial-message">
-          <p class="message-text">"Когда уходят хорошие люди, на небе зажигается новая звезда. Теперь их стало больше, а нам светлее..."</p>
+        <!-- БИОГРАФИЯ С ПЕЧАТАЮЩИМСЯ ТЕКСТОМ -->
+        <section class="bio" id="bio">
+          <p id="typing-text"></p>
+        </section>
+
+        <!-- КООРДИНАТЫ И QR В ОДНОМ РЯДУ -->
+        <div class="info-row">
+          <!-- КООРДИНАТЫ МОГИЛЫ -->
+          <section class="coordinates-section"> 
+            <div class="coordinates-icon">🕊️</div>
+            <div class="coordinates-content">
+              <h3 class="coordinates-title">Место упокоения</h3>
+              <div class="coordinates-display">
+                <span class="coord">59.157658</span>
+                <span class="coord-sep">,</span>
+                <span class="coord">39.910106</span>
+              </div>
+              <div class="coordinates-caption">
+                <span class="caption-text">Земля, хранящая тепло рук...</span>
+              </div>
+              <a href="https://yandex.ru/maps/?ll=39.910106,59.157658&z=16&pt=39.910106,59.157658" 
+                 target="_blank" 
+                 class="coordinates-button">
+                <span class="button-icon">🗺️</span>
+                Открыть на карте
+              </a>
+            </div>
+          </section>
+
+          <!-- QR КОД -->
+          <div class="qr-section">
+            <div class="qr-label">Память всегда с вами</div>
+            <div class="qr-frame"> 
+              <img src="https://github.com/levsergeevich324-prog/mem/raw/main/qr2.png" alt="QR-код страницы памяти">
+            </div>
+            <div class="qr-hint">Отсканируйте, чтобы открыть страницу</div>
+          </div>
         </div>
-        <div class="footer-bottom">
-          <span class="memorial-sign">вечная память</span>
-          <span>Страница создана близкими</span>
-        </div>
-      </footer>
+
+        <!-- ПОДВАЛ С ПАМЯТНЫМИ СЛОВАМИ -->
+        <footer>
+          <div class="memorial-message">
+            <p class="message-text">"Когда уходят хорошие люди, на небе зажигается новая звезда. Теперь их стало больше, а нам светлее..."</p>
+          </div>
+          <div class="footer-bottom">
+            <span class="memorial-sign">вечная память</span>
+            <span>Страница создана близкими</span>
+          </div>
+        </footer>
+        
+      </div>
 
     </div>
   </div>
@@ -1205,19 +1154,14 @@
     function initCandleFeature() {
       const candleButton = document.getElementById('candleButton');
       const candleEffect = document.getElementById('candleEffect');
-      const counterText = document.getElementById('counterText');
-      const candleCounter = document.querySelector('.candle-counter');
-      const mainCard = document.getElementById('mainCard');
-      const candleButtonContainer = document.getElementById('candleButtonContainer');
-      const timelineSection = document.getElementById('timelineSection');
-      const videoSection = document.getElementById('videoSection');
-      const bio = document.getElementById('bio');
-      const infoRow = document.getElementById('infoRow');
-      const footer = document.getElementById('footer');
-      const brightStar = document.getElementById('brightStar');
       const whiteOverlay = document.getElementById('whiteOverlay');
+      const counterText = document.getElementById('counterText');
+      const headerTop = document.getElementById('headerTop');
+      const mainHeader = document.getElementById('mainHeader');
+      const daysCounter = document.getElementById('daysCounter');
+      const hiddenContent = document.getElementById('hiddenContent');
       
-      if (!candleButton || !candleEffect || !counterText) return;
+      if (!candleButton || !candleEffect || !whiteOverlay || !counterText) return;
       
       let candleCount = localStorage.getItem('candleCount') ? 
                         parseInt(localStorage.getItem('candleCount')) : 0;
@@ -1248,88 +1192,52 @@
       }
       
       candleButton.addEventListener('click', function() {
+        // Увеличиваем счетчик
         candleCount++;
         counterText.textContent = candleCount;
         localStorage.setItem('candleCount', candleCount);
+        
+        // Эффект свечи
         candleEffect.classList.add('active');
         
-        candleButton.style.transform = 'scale(0.95)';
-        setTimeout(() => {
-          candleButton.style.transform = 'scale(1)';
-        }, 200);
-        
+        // Искорки
         createSparks();
         
         if (navigator.vibrate) {
           navigator.vibrate(50);
         }
         
-        // 1. Всё исчезает
-        setTimeout(() => {
-          mainCard.classList.add('hidden');
-          candleButtonContainer.classList.add('hidden');
-          candleCounter.classList.add('hidden');
-        }, 500);
+        // 1. Всё исчезает (кроме звезд)
+        headerTop.classList.add('hidden');
+        mainHeader.classList.add('hidden');
+        daysCounter.classList.add('hidden');
         
-        // 2. Снизу выезжает хронология
-        setTimeout(() => {
-          timelineSection.classList.add('visible');
-        }, 1500);
-        
-        // 3. Хронология плавно скролится вверх вместе с плеером
-        setTimeout(() => {
-          videoSection.classList.add('visible');
-          
-          // Плавный скролл
-          videoSection.scrollIntoView({ behavior: 'smooth', block: 'center' });
-        }, 3000);
-        
-        // 4. Звезда начинает разгораться
-        setTimeout(() => {
-          brightStar.classList.add('active');
-        }, 5000);
-        
-        // 5. Забеливание
+        // 2. Забеливание
         setTimeout(() => {
           whiteOverlay.classList.add('active');
-        }, 8000);
+        }, 1000);
         
-        // 6. Появляется весь сайт с печатающейся биографией
+        // 3. Появление остального контента
         setTimeout(() => {
           whiteOverlay.classList.remove('active');
-          brightStar.classList.remove('active');
-          
-          mainCard.classList.remove('hidden');
-          candleButtonContainer.classList.remove('hidden');
-          candleCounter.classList.remove('hidden');
-          
-          timelineSection.classList.remove('visible');
-          videoSection.classList.remove('visible');
-          
-          bio.classList.add('visible');
-          typeWriter();
-          
-          setTimeout(() => {
-            infoRow.classList.add('visible');
-            footer.classList.add('visible');
-          }, 1000);
-          
-        }, 11000);
-      });
-      
-      if (candleCounter) {
-        candleCounter.addEventListener('dblclick', function() {
-          candleCount = 0;
-          counterText.textContent = '0';
-          localStorage.setItem('candleCount', '0');
           candleEffect.classList.remove('active');
           
-          candleEffect.style.opacity = '0';
-          setTimeout(() => {
-            candleEffect.style.opacity = '';
-          }, 500);
-        });
-      }
+          // Показываем скрытый контент
+          hiddenContent.classList.add('visible');
+          
+          // Запускаем печать текста
+          typeWriter();
+        }, 4000);
+      });
+      
+      // Двойной клик для сброса
+      candleButton.addEventListener('dblclick', function(e) {
+        e.stopPropagation();
+        candleCount = 0;
+        counterText.textContent = '0';
+        localStorage.setItem('candleCount', '0');
+        candleEffect.classList.remove('active');
+      });
     }
 
     // ===== МЕРЦАНИЕ ДАТЫ (1935 ⇄ 1936) =====
@@ -1408,5 +1316,6 @@
   </script>
 </body>
 </html>
+ 
 
    
