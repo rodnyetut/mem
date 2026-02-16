@@ -17,7 +17,7 @@
       50% { opacity: 1; }
     }
 
-    /* Эффект свечи (упрощенный) */
+    /* Эффект свечи */
     @keyframes candleFlicker {
       0%, 100% { 
         opacity: 0.3;
@@ -101,7 +101,7 @@
       display: inline-block;
       width: 3px;
       height: 20px;
-      background-color: #8b6b4d;
+      background-color: #4a3a2a;
       margin-left: 5px;
       animation: blink 1s infinite;
       vertical-align: middle;
@@ -159,7 +159,7 @@
       z-index: 1;
     }
 
-    /* Эффект свечи (упрощенный) */
+    /* Эффект свечи */
     .candle-effect {
       position: fixed;
       top: 0;
@@ -542,6 +542,132 @@
       z-index: -1;
     }
 
+    /* НОВЫЕ ЭЛЕМЕНТЫ СТАРИНЫ */
+
+    /* Потертости */
+    .hidden-content.visible .wear-mark-1 {
+      position: absolute;
+      top: 20px;
+      left: 30px;
+      width: 150px;
+      height: 80px;
+      background: radial-gradient(ellipse, rgba(100, 50, 20, 0.15), transparent 70%);
+      border-radius: 50%;
+      transform: rotate(-10deg);
+      pointer-events: none;
+      z-index: -1;
+    }
+
+    .hidden-content.visible .wear-mark-2 {
+      position: absolute;
+      bottom: 50px;
+      right: 40px;
+      width: 200px;
+      height: 100px;
+      background: radial-gradient(ellipse, rgba(80, 40, 15, 0.2), transparent 70%);
+      border-radius: 50%;
+      transform: rotate(15deg);
+      pointer-events: none;
+      z-index: -1;
+    }
+
+    .hidden-content.visible .wear-mark-3 {
+      position: absolute;
+      top: 200px;
+      right: 100px;
+      width: 120px;
+      height: 60px;
+      background: linear-gradient(135deg, rgba(120, 70, 30, 0.1), transparent);
+      border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
+      pointer-events: none;
+      z-index: -1;
+    }
+
+    /* Кляксы */
+    .hidden-content.visible .ink-blot-1 {
+      position: absolute;
+      top: 150px;
+      left: 50px;
+      width: 40px;
+      height: 40px;
+      background: rgba(60, 30, 10, 0.25);
+      border-radius: 60% 40% 70% 30% / 40% 60% 40% 60%;
+      transform: rotate(20deg);
+      filter: blur(2px);
+      pointer-events: none;
+      z-index: -1;
+      box-shadow: 0 0 10px rgba(60, 30, 10, 0.2);
+    }
+
+    .hidden-content.visible .ink-blot-2 {
+      position: absolute;
+      bottom: 150px;
+      left: 200px;
+      width: 30px;
+      height: 30px;
+      background: rgba(50, 25, 8, 0.3);
+      border-radius: 50% 20% 80% 30% / 40% 60% 40% 60%;
+      transform: rotate(-15deg);
+      filter: blur(3px);
+      pointer-events: none;
+      z-index: -1;
+    }
+
+    .hidden-content.visible .ink-blot-3 {
+      position: absolute;
+      top: 300px;
+      right: 150px;
+      width: 50px;
+      height: 35px;
+      background: rgba(70, 35, 12, 0.2);
+      border-radius: 80% 20% 70% 30% / 30% 70% 30% 70%;
+      transform: rotate(45deg);
+      filter: blur(4px);
+      pointer-events: none;
+      z-index: -1;
+    }
+
+    /* Следы от воды */
+    .hidden-content.visible .water-stain-1 {
+      position: absolute;
+      top: 400px;
+      left: 300px;
+      width: 100px;
+      height: 60px;
+      background: radial-gradient(ellipse, rgba(140, 90, 40, 0.1), transparent 80%);
+      border-radius: 40% 60% 60% 40% / 60% 30% 70% 40%;
+      filter: blur(5px);
+      pointer-events: none;
+      z-index: -1;
+    }
+
+    .hidden-content.visible .water-stain-2 {
+      position: absolute;
+      bottom: 250px;
+      right: 250px;
+      width: 150px;
+      height: 80px;
+      background: radial-gradient(circle, rgba(120, 70, 30, 0.08), transparent 70%);
+      border-radius: 70% 30% 50% 50% / 30% 60% 40% 70%;
+      filter: blur(6px);
+      pointer-events: none;
+      z-index: -1;
+    }
+
+    /* Порванные края */
+    .hidden-content.visible .tear-mark {
+      position: absolute;
+      top: -5px;
+      left: 20%;
+      width: 60%;
+      height: 15px;
+      background: linear-gradient(135deg, transparent 30%, rgba(100, 50, 20, 0.2) 50%, transparent 70%);
+      filter: blur(3px);
+      pointer-events: none;
+      z-index: 5;
+    }
+
+    /* Цвета для текста на старой бумаге - СДЕЛАНО ТЕМНЕЕ ДЛЯ ЛУЧШЕЙ ВИДИМОСТИ */
     .hidden-content .timeline-section,
     .hidden-content .bio,
     .hidden-content .info-row,
@@ -556,74 +682,116 @@
     .hidden-content.visible .info-row { animation-delay: 0.9s; }
     .hidden-content.visible footer { animation-delay: 1.2s; }
 
-    /* Адаптация цветов под старую бумагу */
+    /* Адаптация цветов под старую бумагу - УСИЛЕНА КОНТРАСТНОСТЬ */
     .hidden-content .timeline-title {
-      color: #5a3e1b;
-      text-shadow: 0 2px 5px rgba(0,0,0,0.2);
+      color: #3a2a1a;
+      text-shadow: 0 2px 5px rgba(0,0,0,0.3);
+      font-weight: 600;
     }
 
     .hidden-content .timeline-content {
-      background: rgba(200, 170, 130, 0.6);
-      border-color: #8b6b4d;
-      color: #2c1e0e;
+      background: rgba(180, 140, 100, 0.7);
+      border-color: #6b4b2d;
+      color: #1a0e05;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.2);
     }
 
     .hidden-content .timeline-year {
-      color: #5a3e1b;
+      color: #3a2a1a;
+      font-weight: 700;
+    }
+
+    .hidden-content .timeline-text {
+      color: #1a0e05;
     }
 
     .hidden-content .bio {
-      background: rgba(200, 170, 130, 0.4);
-      border-left-color: #8b6b4d;
+      background: rgba(170, 130, 90, 0.5);
+      border-left-color: #6b4b2d;
     }
 
     .hidden-content .bio p {
-      color: #2c1e0e;
+      color: #1a0e05;
+      font-weight: 500;
     }
 
     .hidden-content .coordinates-section {
-      background: rgba(200, 170, 130, 0.4);
-      border-color: #8b6b4d;
+      background: rgba(170, 130, 90, 0.5);
+      border-color: #6b4b2d;
     }
 
     .hidden-content .coordinates-title {
-      color: #5a3e1b;
+      color: #3a2a1a;
+      font-weight: 600;
     }
 
     .hidden-content .coord {
-      color: #2c1e0e;
+      color: #1a0e05;
       text-shadow: 0 0 5px #8b6b4d;
+      font-weight: 600;
+    }
+
+    .hidden-content .coord-sep {
+      color: #4a3a2a;
+    }
+
+    .hidden-content .caption-text {
+      color: #2a1a0a;
+      font-weight: 500;
     }
 
     .hidden-content .qr-section {
-      background: rgba(200, 170, 130, 0.5);
-      border-color: #8b6b4d;
+      background: rgba(160, 120, 80, 0.6);
+      border-color: #6b4b2d;
     }
 
     .hidden-content .qr-label {
-      color: #5a3e1b;
-    }
-
-    .hidden-content footer {
-      border-top-color: #8b6b4d;
-    }
-
-    .hidden-content .memorial-message {
-      background: rgba(139, 69, 19, 0.2);
-      border-left-color: #8b6b4d;
-      border-right-color: #8b6b4d;
-    }
-
-    .hidden-content .message-text {
-      color: #5a3e1b;
+      color: #3a2a1a;
+      font-weight: 600;
     }
 
     .hidden-content .qr-hint {
-      color: #5a3e1b;
+      color: #2a1a0a;
+      font-weight: 500;
+    }
+
+    .hidden-content footer {
+      border-top-color: #6b4b2d;
+    }
+
+    .hidden-content .memorial-message {
+      background: rgba(120, 70, 30, 0.3);
+      border-left-color: #6b4b2d;
+      border-right-color: #6b4b2d;
+    }
+
+    .hidden-content .message-text {
+      color: #2a1a0a;
+      font-weight: 600;
+      text-shadow: 0 1px 3px rgba(255, 255, 255, 0.3);
     }
 
     .hidden-content .footer-bottom {
-      color: #5a3e1b;
+      color: #2a1a0a;
+      font-weight: 500;
+    }
+
+    .hidden-content .memorial-sign {
+      color: #4a3a2a;
+      font-weight: 600;
+    }
+
+    /* Улучшение читаемости кнопок */
+    .hidden-content .coordinates-button {
+      color: #1a0e05;
+      font-weight: 600;
+      background: rgba(100, 60, 30, 0.3);
+      border: 1px solid #4a3a2a;
+    }
+
+    .hidden-content .coordinates-button:hover {
+      background: rgba(120, 70, 40, 0.4);
+      color: #000000;
     }
 
     /* ХРОНОЛОГИЯ ЖИЗНИ */
@@ -651,9 +819,9 @@
       transform: translateX(-50%);
       width: 4px;
       height: 100%;
-      background: linear-gradient(to bottom, #8b6b4d, #5a3e1b, #2c1e0e);
+      background: linear-gradient(to bottom, #6b4b2d, #3a2a1a, #1a0e05);
       border-radius: 4px;
-      box-shadow: 0 0 20px rgba(139, 69, 19, 0.3);
+      box-shadow: 0 0 20px rgba(100, 50, 20, 0.3);
     }
 
     .timeline-item {
@@ -682,8 +850,8 @@
 
     .timeline-content:hover {
       transform: scale(1.02);
-      border-color: #c09b5e;
-      box-shadow: 0 5px 30px rgba(139, 69, 19, 0.2);
+      border-color: #a07d5a;
+      box-shadow: 0 5px 30px rgba(100, 50, 20, 0.3);
     }
 
     .timeline-year {
@@ -704,8 +872,8 @@
       transform: translateX(-50%);
       width: 20px;
       height: 20px;
-      background: #8b6b4d;
-      border: 3px solid #fff;
+      background: #6b4b2d;
+      border: 3px solid #e0c9a5;
       border-radius: 50%;
       box-shadow: 0 0 20px #8b6b4d;
       z-index: 10;
@@ -802,20 +970,22 @@
       display: inline-flex;
       align-items: center;
       gap: 10px;
-      background: rgba(139, 69, 19, 0.2);
-      color: #5a3e1b;
+      background: rgba(100, 60, 30, 0.3);
+      color: #1a0e05;
       text-decoration: none;
       padding: 12px 25px;
       border-radius: 40px;
       font-size: 18px;
-      border: 1px solid #8b6b4d;
+      border: 1px solid #6b4b2d;
       transition: all 0.3s ease;
+      font-weight: 600;
     }
 
     .coordinates-button:hover {
-      background: rgba(139, 69, 19, 0.3);
+      background: rgba(120, 70, 40, 0.4);
       transform: translateY(-3px);
-      box-shadow: 0 5px 20px rgba(139, 69, 19, 0.3);
+      box-shadow: 0 5px 20px rgba(100, 50, 20, 0.3);
+      color: #000000;
     }
 
     .button-icon {
@@ -847,7 +1017,7 @@
       padding: 10px;
       background: rgba(255, 255, 255, 0.1);
       border-radius: 16px;
-      border: 1px solid #8b6b4d;
+      border: 1px solid #6b4b2d;
     }
 
     .qr-frame img {
@@ -862,7 +1032,6 @@
       margin-top: 15px;
       font-family: 'Cormorant Garamond', serif;
       font-size: 16px;
-      color: #5a3e1b;
       font-style: italic;
     }
 
@@ -877,24 +1046,26 @@
     .memorial-message {
       text-align: center;
       padding: 25px;
-      background: rgba(139, 69, 19, 0.2);
+      background: rgba(100, 50, 20, 0.3);
       border-radius: 20px;
-      border-left: 4px solid;
-      border-right: 4px solid;
+      border-left: 4px solid #6b4b2d;
+      border-right: 4px solid #6b4b2d;
       margin-bottom: 25px;
+      box-shadow: inset 0 0 20px rgba(100, 50, 20, 0.2);
     }
 
     .message-text {
       font-family: 'Great Vibes', cursive;
       font-size: clamp(26px, 4vw, 32px);
       line-height: 1.5;
-      text-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      text-shadow: 0 2px 5px rgba(255, 255, 255, 0.3);
+      color: #1a0e05;
+      font-weight: 600;
     }
 
     .footer-bottom {
       display: flex;
       justify-content: space-between;
-      color: #5a3e1b;
       font-size: 16px;
       font-style: italic;
       flex-wrap: wrap;
@@ -905,7 +1076,8 @@
       font-size: 14px;
       letter-spacing: 3px;
       text-transform: uppercase;
-      color: #8b6b4d;
+      color: #4a3a2a;
+      font-weight: 600;
     }
 
     /* АДАПТАЦИЯ */
@@ -933,6 +1105,17 @@
       .timeline-year { font-size: 22px; }
       .timeline-text { font-size: 16px; }
       .coordinates-section { flex-direction: column; text-align: center; }
+      
+      .hidden-content.visible .wear-mark-1,
+      .hidden-content.visible .wear-mark-2,
+      .hidden-content.visible .wear-mark-3,
+      .hidden-content.visible .ink-blot-1,
+      .hidden-content.visible .ink-blot-2,
+      .hidden-content.visible .ink-blot-3,
+      .hidden-content.visible .water-stain-1,
+      .hidden-content.visible .water-stain-2 {
+        opacity: 0.5;
+      }
     }
 
     /* Аудио плеер (скрыт) */
@@ -945,7 +1128,7 @@
   <!-- ЗВЁЗДНОЕ НЕБО (видно только ДО забеливания) -->
   <div class="stars" id="stars"></div>
   
-  <!-- ЭФФЕКТ СВЕЧИ (упрощенный) -->
+  <!-- ЭФФЕКТ СВЕЧИ -->
   <div class="candle-effect" id="candleEffect"></div>
   
   <!-- ЗАБЕЛИВАНИЕ -->
@@ -1007,8 +1190,19 @@
         </div>
       </section>
 
-      <!-- КОНТЕНТ, КОТОРЫЙ ПОЯВЛЯЕТСЯ ПОСЛЕ ЗАБЕЛИВАНИЯ (СТАРАЯ БУМАГА) -->
+      <!-- КОНТЕНТ, КОТОРЫЙ ПОЯВЛЯЕТСЯ ПОСЛЕ ЗАБЕЛИВАНИЯ (СТАРАЯ БУМАГА С ЭЛЕМЕНТАМИ СТАРИНЫ) -->
       <div class="hidden-content" id="hiddenContent">
+        
+        <!-- ЭЛЕМЕНТЫ СТАРИНЫ -->
+        <div class="wear-mark-1"></div>
+        <div class="wear-mark-2"></div>
+        <div class="wear-mark-3"></div>
+        <div class="ink-blot-1"></div>
+        <div class="ink-blot-2"></div>
+        <div class="ink-blot-3"></div>
+        <div class="water-stain-1"></div>
+        <div class="water-stain-2"></div>
+        <div class="tear-mark"></div>
         
         <!-- ХРОНОЛОГИЯ ЖИЗНИ -->
         <section class="timeline-section" id="timeline">
@@ -1481,3 +1675,5 @@
   </script>
 </body>
 </html>
+
+ 
