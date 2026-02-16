@@ -946,9 +946,9 @@
         </section>
 
         <!-- ВИДЕО -->
-        <section class="video-section" id="video">
+        <section class="video-section">
           <div class="video-wrapper">
-            <video id="video" 
+            <video id="videoPlayer" 
                    controls 
                    playsinline 
                    preload="auto"
@@ -1073,7 +1073,8 @@
     };
 
     // Настройка видео
-    function setupVideo(videoElement) {
+    function setupVideo() {
+      const videoElement = document.getElementById('videoPlayer');
       if (!videoElement) return;
       
       videoElement.muted = true;
@@ -1095,21 +1096,11 @@
     function setContent() {
       const nameEl = document.getElementById('name');
       const photoEl = document.getElementById('photo');
-      const videoEl = document.getElementById('video');
       
       if (nameEl) nameEl.textContent = defaults.name;
       
       if (photoEl) {
         photoEl.src = defaults.photo;
-      }
-
-      if (videoEl) {
-        const sourceEl = videoEl.querySelector('source');
-        if (sourceEl) {
-          sourceEl.src = defaults.video;
-        }
-        videoEl.load();
-        setupVideo(videoEl);
       }
     }
 
@@ -1118,15 +1109,7 @@
       const textElement = document.getElementById('typing-text');
       if (!textElement) return;
       
-      const fullText = `Миля Иларионовна родилась 11 декабря 1935 года в Вологде в семье Гусевых Илариона и Марии.
-
-Вышла замуж за Карелина Льва Алексеевича. В 1961 году в браке родились двойняшки — Сергей и Ольга. Свою трудовую деятельность Миля Иларионовна начала продавцом, а с 1973 по 1991 год продолжила в службе горгаза, где занималась проверкой газового оборудования в домах.
-
-В 1981 году семья потеряла кормильца — Лев Алексеевич ушел из жизни. Миля Иларионовна больше замуж не выходила. Выйдя на пенсию, она не смогла сидеть без дела: подрабатывала на рынке, чтобы иметь возможность помогать деньгами свекрови и внукам.
-
-Она была настоящей хранительницей дома и очень умелой женщиной. Профессионально содержала огород — в один особенно урожайный сезон ей удалось собрать с двух небольших теплиц 100 пятилитровых ведер помидоров. Славилась своим мастерством вязания и умением печь вкуснейшие пироги. Всегда готовая прийти на помощь, она выручала близких деньгами, при этом сама умела копить.
-
-Отличаясь мудрым отношением к жизни, она часто говорила: «Только бы не належаться, умереть быстро». За несколько месяцев до ухода она словно почувствовала свою кончину и с тревогой спрашивала родных: «Как вы без меня жить будете?». Её пожелание сбылось — она ушла быстро 27 марта 2013 года.`;
+      const fullText = `Миля Иларионовна родилась 11 декабря 1935 года в Вологде в семье Гусевых Илариона и Марии.\n\nВышла замуж за Карелина Льва Алексеевича. В 1961 году в браке родились двойняшки — Сергей и Ольга. Свою трудовую деятельность Миля Иларионовна начала продавцом, а с 1973 по 1991 год продолжила в службе горгаза, где занималась проверкой газового оборудования в домах.\n\nВ 1981 году семья потеряла кормильца — Лев Алексеевич ушел из жизни. Миля Иларионовна больше замуж не выходила. Выйдя на пенсию, она не смогла сидеть без дела: подрабатывала на рынке, чтобы иметь возможность помогать деньгами свекрови и внукам.\n\nОна была настоящей хранительницей дома и очень умелой женщиной. Профессионально содержала огород — в один особенно урожайный сезон ей удалось собрать с двух небольших теплиц 100 пятилитровых ведер помидоров. Славилась своим мастерством вязания и умением печь вкуснейшие пироги. Всегда готовая прийти на помощь, она выручала близких деньгами, при этом сама умела копить.\n\nОтличаясь мудрым отношением к жизни, она часто говорила: «Только бы не належаться, умереть быстро». За несколько месяцев до ухода она словно почувствовала свою кончину и с тревогой спрашивала родных: «Как вы без меня жить будете?». Её пожелание сбылось — она ушла быстро 27 марта 2013 года.`;
       
       let i = 0;
       textElement.innerHTML = '';
@@ -1135,7 +1118,7 @@
         if (i < fullText.length) {
           textElement.innerHTML += fullText.charAt(i);
           i++;
-          setTimeout(type, 30);
+          setTimeout(type, 20);
         } else {
           const cursor = document.createElement('span');
           cursor.className = 'typing-cursor';
@@ -1153,10 +1136,9 @@
         setTimeout(() => {
           timelineSection.scrollIntoView({ 
             behavior: 'smooth', 
-            block: 'start',
-            inline: 'nearest'
+            block: 'start'
           });
-        }, 2100); // Скролл через 2.1 секунды после появления контента
+        }, 2100);
       }
     }
 
@@ -1185,7 +1167,14 @@
       const daysCounter = document.getElementById('daysCounter');
       const hiddenContent = document.getElementById('hiddenContent');
       
-      if (!candleButton || !candleEffect || !whiteOverlay || !counterText) return;
+      console.log('Candle button found:', candleButton);
+      console.log('Candle effect found:', candleEffect);
+      console.log('White overlay found:', whiteOverlay);
+      
+      if (!candleButton || !candleEffect || !whiteOverlay || !counterText) {
+        console.error('Required elements not found!');
+        return;
+      }
       
       let candleCount = localStorage.getItem('candleCount') ? 
                         parseInt(localStorage.getItem('candleCount')) : 0;
@@ -1215,7 +1204,9 @@
         }
       }
       
-      candleButton.addEventListener('click', function() {
+      candleButton.addEventListener('click', function(e) {
+        console.log('Candle button clicked!');
+        
         // Увеличиваем счетчик
         candleCount++;
         counterText.textContent = candleCount;
@@ -1231,18 +1222,20 @@
           navigator.vibrate(50);
         }
         
-        // 1. Всё исчезает (кроме звезд) - увеличено до 3 секунд
+        // 1. Всё исчезает (кроме звезд)
         headerTop.classList.add('hidden');
         mainHeader.classList.add('hidden');
         daysCounter.classList.add('hidden');
         
-        // 2. Забеливание начинается через 3 секунды и длится 5 секунд
+        // 2. Забеливание начинается через 3 секунды
         setTimeout(() => {
+          console.log('White overlay activated');
           whiteOverlay.classList.add('active');
         }, 3000);
         
-        // 3. Появление остального контента через 8 секунд (3+5)
+        // 3. Появление остального контента через 8 секунд
         setTimeout(() => {
+          console.log('Showing hidden content');
           whiteOverlay.classList.remove('active');
           candleEffect.classList.remove('active');
           
@@ -1251,6 +1244,9 @@
           
           // Запускаем печать текста
           typeWriter();
+          
+          // Запускаем видео
+          setupVideo();
           
           // Запускаем плавный скролл к хронологии
           smoothScrollToTimeline();
@@ -1324,6 +1320,7 @@
 
     // ===== ЗАПУСК =====
     document.addEventListener('DOMContentLoaded', function() {
+      console.log('DOM loaded');
       setContent();
       createStars();
       updateDaysCounter();
@@ -1344,6 +1341,5 @@
   </script>
 </body>
 </html>
- 
 
    
