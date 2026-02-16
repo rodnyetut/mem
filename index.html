@@ -49,24 +49,23 @@
       }
     }
 
-    /* Эффект ветерка */
-    @keyframes windBlow {
-      0% { transform: translateX(-10px) scale(1); opacity: 0; }
-      50% { transform: translateX(10px) scale(1.2); opacity: 0.8; }
-      100% { transform: translateX(20px) scale(0.8); opacity: 0; }
-    }
-
-    /* Эффект затухания свечи */
-    @keyframes candleFadeOut {
-      0% { opacity: 1; transform: scale(1); }
-      100% { opacity: 0; transform: scale(0.8); }
-    }
-
     /* Эффект появления звезды */
     @keyframes starGrow {
-      0% { opacity: 0.2; transform: scale(1); box-shadow: 0 0 50px rgba(255, 215, 0, 0.3); }
-      50% { opacity: 0.8; transform: scale(1.5); box-shadow: 0 0 150px rgba(255, 215, 0, 0.8); }
-      100% { opacity: 1; transform: scale(2); box-shadow: 0 0 200px rgba(255, 255, 255, 1); }
+      0% { 
+        opacity: 0; 
+        transform: scale(0.5) translate(-50%, -50%);
+        box-shadow: 0 0 50px rgba(255, 215, 0, 0.2);
+      }
+      50% { 
+        opacity: 0.8; 
+        transform: scale(1.5) translate(-50%, -50%);
+        box-shadow: 0 0 150px rgba(255, 215, 0, 0.8);
+      }
+      100% { 
+        opacity: 1; 
+        transform: scale(2) translate(-50%, -50%);
+        box-shadow: 0 0 250px rgba(255, 255, 255, 1);
+      }
     }
 
     /* Эффект забеливания */
@@ -89,73 +88,6 @@
       margin-left: 5px;
       animation: blink 1s infinite;
       vertical-align: middle;
-    }
-
-    /* Ветерок */
-    .wind-effect {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      pointer-events: none;
-      z-index: 200;
-      background: transparent;
-      opacity: 0;
-      transition: opacity 0.5s ease;
-    }
-
-    .wind-effect.active {
-      opacity: 1;
-    }
-
-    .wind-particle {
-      position: fixed;
-      color: rgba(255, 255, 255, 0.6);
-      font-size: 20px;
-      animation: windBlow 2s ease-out forwards;
-      pointer-events: none;
-      z-index: 201;
-    }
-
-    /* Забеливание */
-    .white-overlay {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: white;
-      z-index: 300;
-      opacity: 0;
-      pointer-events: none;
-      transition: opacity 1s ease;
-    }
-
-    .white-overlay.active {
-      opacity: 1;
-      animation: whiteOut 2s ease-in-out;
-    }
-
-    /* Яркая звезда */
-    .bright-star {
-      position: fixed;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      width: 10px;
-      height: 10px;
-      background: radial-gradient(circle, #ffffff, #ffd700);
-      border-radius: 50%;
-      box-shadow: 0 0 50px rgba(255, 215, 0, 0.5);
-      z-index: 250;
-      opacity: 0;
-      pointer-events: none;
-      transition: all 1s ease;
-    }
-
-    .bright-star.active {
-      animation: starGrow 3s ease-in-out forwards;
     }
 
     * {
@@ -527,8 +459,8 @@
     .timeline-section {
       margin: 50px 0 40px;
       opacity: 0;
-      transform: translateY(50px);
-      transition: opacity 1s ease, transform 1s ease;
+      transform: translateY(100px);
+      transition: opacity 1.5s ease, transform 1.5s ease;
       pointer-events: none;
     }
 
@@ -573,8 +505,8 @@
       justify-content: space-between;
       align-items: center;
       opacity: 0;
-      transform: translateY(30px);
-      transition: all 0.5s ease;
+      transform: translateY(50px);
+      transition: all 0.8s ease;
     }
 
     .timeline-section.visible .timeline-item {
@@ -582,14 +514,14 @@
       transform: translateY(0);
     }
 
-    .timeline-section.visible .timeline-item:nth-child(1) { transition-delay: 0.1s; }
-    .timeline-section.visible .timeline-item:nth-child(2) { transition-delay: 0.2s; }
-    .timeline-section.visible .timeline-item:nth-child(3) { transition-delay: 0.3s; }
-    .timeline-section.visible .timeline-item:nth-child(4) { transition-delay: 0.4s; }
-    .timeline-section.visible .timeline-item:nth-child(5) { transition-delay: 0.5s; }
-    .timeline-section.visible .timeline-item:nth-child(6) { transition-delay: 0.6s; }
-    .timeline-section.visible .timeline-item:nth-child(7) { transition-delay: 0.7s; }
-    .timeline-section.visible .timeline-item:nth-child(8) { transition-delay: 0.8s; }
+    .timeline-section.visible .timeline-item:nth-child(1) { transition-delay: 0.2s; }
+    .timeline-section.visible .timeline-item:nth-child(2) { transition-delay: 0.4s; }
+    .timeline-section.visible .timeline-item:nth-child(3) { transition-delay: 0.6s; }
+    .timeline-section.visible .timeline-item:nth-child(4) { transition-delay: 0.8s; }
+    .timeline-section.visible .timeline-item:nth-child(5) { transition-delay: 1.0s; }
+    .timeline-section.visible .timeline-item:nth-child(6) { transition-delay: 1.2s; }
+    .timeline-section.visible .timeline-item:nth-child(7) { transition-delay: 1.4s; }
+    .timeline-section.visible .timeline-item:nth-child(8) { transition-delay: 1.6s; }
 
     .timeline-item:nth-child(odd) {
       flex-direction: row-reverse;
@@ -644,8 +576,8 @@
     .video-section {
       margin: 50px 0;
       opacity: 0;
-      transform: translateY(50px);
-      transition: opacity 1s ease, transform 1s ease;
+      transform: translateY(100px);
+      transition: opacity 1.5s ease, transform 1.5s ease;
     }
 
     .video-section.visible {
@@ -869,6 +801,46 @@
       color: #c09b5e;
     }
 
+    /* ЯРКАЯ ЗВЕЗДА */
+    .bright-star {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 10px;
+      height: 10px;
+      background: radial-gradient(circle, #ffffff, #ffd700);
+      border-radius: 50%;
+      z-index: 250;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.5s ease;
+    }
+
+    .bright-star.active {
+      opacity: 1;
+      animation: starGrow 8s ease-in-out forwards;
+    }
+
+    /* ЗАБЕЛИВАНИЕ */
+    .white-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: white;
+      z-index: 300;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 2s ease;
+    }
+
+    .white-overlay.active {
+      opacity: 1;
+      animation: whiteOut 3s ease-in-out;
+    }
+
     /* АДАПТАЦИЯ */
     @media screen and (max-width: 900px) {
       .timeline::before { left: 30px; }
@@ -905,9 +877,6 @@
   <!-- ЭФФЕКТ СВЕЧИ -->
   <div class="candle-effect" id="candleEffect"></div>
   
-  <!-- ЭФФЕКТ ВЕТЕРКА -->
-  <div class="wind-effect" id="windEffect"></div>
-  
   <!-- ЯРКАЯ ЗВЕЗДА -->
   <div class="bright-star" id="brightStar"></div>
   
@@ -941,7 +910,7 @@
         </div>
       </header>
 
-      <!-- КНОПКА ЗАЖЕЧЬ СВЕЧУ (ПЕРВАЯ) -->
+      <!-- КНОПКА ЗАЖЕЧЬ СВЕЧУ -->
       <div class="candle-button-container" id="candleButtonContainer">
         <button class="candle-button" id="candleButton">
           <span class="candle-button-icon">🕯️</span>
@@ -949,7 +918,7 @@
         </button>
       </div>
 
-      <!-- ХРОНОЛОГИЯ ЖИЗНИ (СКРЫТА ПО УМОЛЧАНИЮ) -->
+      <!-- ХРОНОЛОГИЯ ЖИЗНИ -->
       <section class="timeline-section" id="timelineSection">
         <h2 class="timeline-title">Хронология жизни</h2>
         <div class="timeline">
@@ -1245,7 +1214,6 @@
       const bio = document.getElementById('bio');
       const infoRow = document.getElementById('infoRow');
       const footer = document.getElementById('footer');
-      const windEffect = document.getElementById('windEffect');
       const brightStar = document.getElementById('brightStar');
       const whiteOverlay = document.getElementById('whiteOverlay');
       
@@ -1279,31 +1247,6 @@
         }
       }
       
-      function createWindEffect() {
-        windEffect.classList.add('active');
-        
-        for (let i = 0; i < 10; i++) {
-          setTimeout(() => {
-            const wind = document.createElement('div');
-            wind.className = 'wind-particle';
-            wind.innerHTML = '💨';
-            wind.style.left = Math.random() * 100 + '%';
-            wind.style.top = Math.random() * 100 + '%';
-            wind.style.fontSize = (Math.random() * 20 + 15) + 'px';
-            wind.style.animationDuration = (Math.random() * 1 + 1.5) + 's';
-            document.body.appendChild(wind);
-            
-            setTimeout(() => {
-              wind.remove();
-            }, 2000);
-          }, i * 200);
-        }
-        
-        setTimeout(() => {
-          windEffect.classList.remove('active');
-        }, 3000);
-      }
-      
       candleButton.addEventListener('click', function() {
         candleCount++;
         counterText.textContent = candleCount;
@@ -1321,8 +1264,6 @@
           navigator.vibrate(50);
         }
         
-        // АНИМАЦИЯ ПОСЛЕ ЗАЖЖЕНИЯ СВЕЧИ
-        
         // 1. Всё исчезает
         setTimeout(() => {
           mainCard.classList.add('hidden');
@@ -1330,33 +1271,30 @@
           candleCounter.classList.add('hidden');
         }, 500);
         
-        // 2. Появляется хронология
+        // 2. Снизу выезжает хронология
         setTimeout(() => {
           timelineSection.classList.add('visible');
         }, 1500);
         
-        // 3. Хронология едет вниз до плеера
+        // 3. Хронология плавно скролится вверх вместе с плеером
         setTimeout(() => {
           videoSection.classList.add('visible');
-        }, 3500);
+          
+          // Плавный скролл
+          videoSection.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }, 3000);
         
-        // 4. Ветерок задувает свечу
-        setTimeout(() => {
-          createWindEffect();
-          candleEffect.classList.remove('active');
-        }, 5500);
-        
-        // 5. Яркая звезда загорается
+        // 4. Звезда начинает разгораться
         setTimeout(() => {
           brightStar.classList.add('active');
-        }, 6000);
+        }, 5000);
         
-        // 6. Забеливание экрана
+        // 5. Забеливание
         setTimeout(() => {
           whiteOverlay.classList.add('active');
         }, 8000);
         
-        // 7. Сайт появляется обратно
+        // 6. Появляется весь сайт с печатающейся биографией
         setTimeout(() => {
           whiteOverlay.classList.remove('active');
           brightStar.classList.remove('active');
@@ -1368,7 +1306,6 @@
           timelineSection.classList.remove('visible');
           videoSection.classList.remove('visible');
           
-          // Запускаем биографию
           bio.classList.add('visible');
           typeWriter();
           
@@ -1377,7 +1314,7 @@
             footer.classList.add('visible');
           }, 1000);
           
-        }, 10000);
+        }, 11000);
       });
       
       if (candleCounter) {
@@ -1471,3 +1408,5 @@
   </script>
 </body>
 </html>
+
+   
