@@ -1221,6 +1221,10 @@
     #bioAudio {
       display: none;
     }
+    /* ДОБАВЛЕНО: Скрытый аудио элемент для звука свечи */
+    #candleSound {
+      display: none;
+    }
   </style>
 </head>
 <body>
@@ -1258,6 +1262,11 @@
   <!-- Аудио -->
   <audio id="bioAudio" preload="auto" loop>
     <source src="https://github.com/rodnyetut/mem/raw/main/voice4.mp3" type="audio/mpeg">
+  </audio>
+  
+  <!-- ДОБАВЛЕНО: Аудио для звука свечи -->
+  <audio id="candleSound" preload="auto">
+    <source src="zvon.mp3" type="audio/mpeg">
   </audio>
 
   <div class="wrap">
@@ -1561,6 +1570,15 @@
       console.log('Свеча поставлена (локально)');
     }
 
+    // ДОБАВЛЕНО: Функция для воспроизведения звука свечи
+    function playCandleSound() {
+      const candleSound = document.getElementById('candleSound');
+      if (candleSound) {
+        candleSound.currentTime = 0; // Сбрасываем на начало
+        candleSound.play().catch(e => console.log('Candle sound play failed:', e));
+      }
+    }
+
     function initCandleFeature() {
       const btn = document.getElementById('candleButton');
       const btnNew = document.getElementById('candleButtonNew');
@@ -1649,6 +1667,9 @@
         
         incrementTotalStats();
         createSparks();
+        
+        // ДОБАВЛЕНО: Воспроизводим звук свечи
+        playCandleSound();
         
         // Добавляем эффект пульсации при клике
         btnNew.style.transform = 'scale(0.95)';
