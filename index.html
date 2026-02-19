@@ -398,6 +398,81 @@
       }
     }
 
+    /* ===== НОВАЯ КНОПКА ПОСТАВИТЬ СВЕЧКУ ===== */
+    .candle-button-new {
+      position: fixed;
+      bottom: 30px;
+      left: 30px;
+      z-index: 1000;
+      background: linear-gradient(135deg, #4a2a1a, #6b4b2d);
+      backdrop-filter: blur(10px);
+      border: 2px solid #ffb347;
+      border-radius: 60px;
+      padding: 15px 30px;
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      box-shadow: 0 10px 30px rgba(255, 180, 70, 0.4);
+      cursor: pointer;
+      transition: all 0.3s ease;
+      animation: pulse 2s infinite;
+    }
+
+    .candle-button-new:hover {
+      transform: scale(1.05) translateY(-5px);
+      box-shadow: 0 20px 40px rgba(255, 180, 70, 0.6);
+      border-color: #ffd700;
+    }
+
+    .candle-button-new:active {
+      transform: scale(0.95);
+    }
+
+    @keyframes pulse {
+      0%, 100% {
+        box-shadow: 0 10px 30px rgba(255, 180, 70, 0.4);
+      }
+      50% {
+        box-shadow: 0 10px 50px rgba(255, 180, 70, 0.8);
+      }
+    }
+
+    .candle-icon-new {
+      font-size: 32px;
+      animation: gentleFlicker 2s infinite;
+    }
+
+    .candle-text-new {
+      color: #ffd700;
+      font-size: 20px;
+      font-weight: 600;
+      letter-spacing: 1px;
+    }
+
+    .candle-count-new {
+      background: #ffb347;
+      color: #2c1810;
+      font-size: 18px;
+      font-weight: 700;
+      padding: 5px 12px;
+      border-radius: 40px;
+      margin-left: 5px;
+    }
+
+    @media screen and (max-width: 768px) {
+      .candle-button-new {
+        bottom: 20px;
+        left: 20px;
+        padding: 12px 20px;
+      }
+      .candle-text-new {
+        font-size: 16px;
+      }
+      .candle-icon-new {
+        font-size: 24px;
+      }
+    }
+
     /* ШАПКА (видна при заходе) */
     .header-top {
       display: flex;
@@ -1159,6 +1234,13 @@
     <span class="stats-number" id="totalCandles">0</span>
   </div>
   
+  <!-- НОВАЯ ОТДЕЛЬНАЯ КНОПКА ПОСТАВИТЬ СВЕЧКУ -->
+  <div class="candle-button-new" id="candleButtonNew">
+    <span class="candle-icon-new">🕯️</span>
+    <span class="candle-text-new">Поставить свечку</span>
+    <span class="candle-count-new" id="candleCountNew">0</span>
+  </div>
+  
   <!-- КНОПКА УСТАНОВКИ PWA -->
   <div class="install-banner" id="installBanner">
     <div class="install-content">
@@ -1478,15 +1560,15 @@
     // Функция для обновления общей статистики
     async function updateTotalStats() {
       try {
-        // Используем бесплатное API для хранения счетчика
         const response = await fetch('https://api.countapi.xyz/hit/levsergeevich324-prog/mem-candles');
         const data = await response.json();
         document.getElementById('totalCandles').textContent = data.value.toLocaleString();
+        document.getElementById('candleCountNew').textContent = data.value.toLocaleString();
       } catch (error) {
         console.log('Ошибка загрузки статистики:', error);
-        // Если API не работает, используем локальное хранилище
         let total = localStorage.getItem('totalCandles') || 0;
         document.getElementById('totalCandles').textContent = total;
+        document.getElementById('candleCountNew').textContent = total;
       }
     }
 
@@ -1496,17 +1578,19 @@
         const response = await fetch('https://api.countapi.xyz/hit/levsergeevich324-prog/mem-candles');
         const data = await response.json();
         document.getElementById('totalCandles').textContent = data.value.toLocaleString();
+        document.getElementById('candleCountNew').textContent = data.value.toLocaleString();
       } catch (error) {
         console.log('Ошибка обновления статистики:', error);
-        // Запасной вариант
         let total = parseInt(localStorage.getItem('totalCandles') || 0) + 1;
         localStorage.setItem('totalCandles', total);
         document.getElementById('totalCandles').textContent = total;
+        document.getElementById('candleCountNew').textContent = total;
       }
     }
 
     function initCandleFeature() {
       const btn = document.getElementById('candleButton');
+      const btnNew = document.getElementById('candleButtonNew');
       const effect = document.getElementById('candleEffect');
       const overlay = document.getElementById('whiteOverlay');
       const counter = document.getElementById('counterText');
@@ -1521,13 +1605,83 @@
       let count = localStorage.getItem('candleCount') ? parseInt(localStorage.getItem('candleCount')) : 0;
       counter.textContent = count;
       
-      btn.addEventListener('click', function() {
+      function createSparks() {
+        for (let i = 0; i < 5; i++) {
+          setTimeout(() => {
+            const spark = document.createElement('div');
+            spark.className = 'candle-spark';
+            spark.innerHTML = '✨';
+            spark.style.left = Math.random() * 100 + '%';
+            spark.style.top = Math.random() * 100 + '%';
+            spark.style.fontSize = (Math.random() * 15 + 10) + 'px';
+            spark.style.animationDuration = (Math.random() * 1 + 1.5) + 's';
+            document.body.appendChild(spark);
+            
+            setTimeout(() => {
+              spark.remove();
+            }, 2000);
+          }, i * 100);
+        }
+      }
+      
+      // Функция для обеих кнопок
+      function handleCandleClick() {
         count++;
         counter.textContent = count;
         localStorage.setItem('candleCount', count);
         
-        // Увеличиваем общий счетчик
         incrementTotalStats();
+        createSparks();
+      }
+      
+      btn.addEventListener('click', handleCandleClick);
+      btnNew.addEventListener('click', handleCandleClick);
+    }
+
+    function initCandleFeature() {
+      const btn = document.getElementById('candleButton');
+      const btnNew = document.getElementById('candleButtonNew');
+      const effect = document.getElementById('candleEffect');
+      const overlay = document.getElementById('whiteOverlay');
+      const counter = document.getElementById('counterText');
+      const headerTop = document.getElementById('headerTop');
+      const mainHeader = document.getElementById('mainHeader');
+      const daysCounter = document.getElementById('daysCounter');
+      const video = document.getElementById('videoSection');
+      const hidden = document.getElementById('hiddenContent');
+      const stars = document.getElementById('stars');
+      const soundControl = document.getElementById('soundControl');
+      
+      let count = localStorage.getItem('candleCount') ? parseInt(localStorage.getItem('candleCount')) : 0;
+      counter.textContent = count;
+      
+      function createSparks() {
+        for (let i = 0; i < 5; i++) {
+          setTimeout(() => {
+            const spark = document.createElement('div');
+            spark.className = 'candle-spark';
+            spark.innerHTML = '✨';
+            spark.style.left = Math.random() * 100 + '%';
+            spark.style.top = Math.random() * 100 + '%';
+            spark.style.fontSize = (Math.random() * 15 + 10) + 'px';
+            spark.style.animationDuration = (Math.random() * 1 + 1.5) + 's';
+            document.body.appendChild(spark);
+            
+            setTimeout(() => {
+              spark.remove();
+            }, 2000);
+          }, i * 100);
+        }
+      }
+      
+      // Функция для обработки клика на кнопку "Биография" (запускает всю анимацию)
+      function handleBiographyClick() {
+        count++;
+        counter.textContent = count;
+        localStorage.setItem('candleCount', count);
+        
+        incrementTotalStats();
+        createSparks();
         
         effect.classList.add('active');
         
@@ -1546,25 +1700,41 @@
           effect.classList.remove('active');
           hidden.classList.add('visible');
           
-          // Показываем кнопку управления звуком
           soundControl.style.display = 'flex';
           
           typeWriter();
           playBiographyAudio();
           initSoundControl();
           
-          // Запускаем видео в хронологии
           setTimeout(() => {
             playTimelineVideos();
           }, 1000);
           
-          // Скроллим к хронологии через небольшую задержку
           setTimeout(() => {
             scrollToTimeline();
           }, 1500);
           
         }, 8000);
-      });
+      }
+      
+      // Функция для обработки клика на кнопку "Поставить свечку" (только увеличивает счетчик)
+      function handleCandleOnlyClick() {
+        count++;
+        counter.textContent = count;
+        localStorage.setItem('candleCount', count);
+        
+        incrementTotalStats();
+        createSparks();
+        
+        // Добавляем эффект пульсации при клике
+        btnNew.style.transform = 'scale(0.95)';
+        setTimeout(() => {
+          btnNew.style.transform = 'scale(1)';
+        }, 200);
+      }
+      
+      btn.addEventListener('click', handleBiographyClick);
+      btnNew.addEventListener('click', handleCandleOnlyClick);
     }
 
     document.addEventListener('DOMContentLoaded', function() {
@@ -1572,11 +1742,9 @@
       createStars();
       updateDaysCounter();
       setupVideo();
-      updateTotalStats(); // Загружаем общую статистику
+      updateTotalStats();
       initCandleFeature();
       setInterval(updateDaysCounter, 86400000);
-      
-      // Обновляем статистику каждые 30 секунд
       setInterval(updateTotalStats, 30000);
     });
 
