@@ -195,30 +195,36 @@
           </section>
 
           <!-- КООРДИНАТЫ И QR -->
-          <div class="info-row" id="info">
-            <section class="coordinates-section">
-              <div class="coordinates-icon">🕊️</div>
-              <div class="coordinates-content">
-                <h3 class="coordinates-title">Место упокоения</h3>
-                <div class="coordinates-display">
-                  <span class="coord">59.157658</span>
-                  <span class="coord-sep">,</span>
-                  <span class="coord">39.910106</span>
-                </div>
-                <div class="coordinates-caption">
-                  <span class="caption-text">Рада,что вы пришли.Посидите в тишине,здесь она особенная...</span>
-                  <img src="Babulya.jpg" 
-                   alt="Миля" 
-                      width="150" 
-                      height="150">
-                </div>
-                <a href="https://yandex.ru/maps/?ll=39.910106,59.157658&z=16&pt=39.910106,59.157658" 
-                   target="_blank" class="coordinates-button">
-                  <span class="button-icon">🗺️</span>
-                  Открыть на карте
-                </a>
-              </div>
-            </section>
+       <div class="info-row" id="info">
+  <section class="coordinates-section" style="background-image: url('Babulya.jpg'); background-size: cover; background-position: center; background-repeat: no-repeat; position: relative;">
+    <!-- Полупрозрачная подложка для читаемости текста -->
+    <div style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: rgba(245, 236, 220, 0.85); border-radius: 28px;"></div>
+    
+    <div class="coordinates-icon" style="position: relative; z-index: 2;">🕊️</div>
+    <div class="coordinates-content" style="position: relative; z-index: 2;">
+      <h3 class="coordinates-title">Место упокоения</h3>
+      <div class="coordinates-display">
+        <span class="coord">59.157658</span>
+        <span class="coord-sep">,</span>
+        <span class="coord">39.910106</span>
+      </div>
+      <div class="coordinates-caption">
+        <span class="caption-text">Рада,что вы пришли.Посидите в тишине,здесь она особенная...</span>
+        <img src="Babulya.jpg" 
+             alt="Миля" 
+             width="150" 
+             height="150" 
+             style="display: block; margin: 10px auto 0; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.2);">
+      </div>
+      <a href="https://yandex.ru/maps/?ll=39.910106,59.157658&z=16&pt=39.910106,59.157658" 
+         target="_blank" class="coordinates-button" 
+         style="position: relative; z-index: 2;">
+        <span class="button-icon">🗺️</span>
+        Открыть на карте
+      </a>
+    </div>
+  </section>
+</div>
 
             <div class="qr-section">
               <div class="qr-label">Память всегда с вами</div>
