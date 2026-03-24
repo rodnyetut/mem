@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ru">
 <head>
   <meta charset="utf-8" />
@@ -9,490 +9,53 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Cormorant+Garamond:wght@300;400;500;600;700&family=Great+Vibes&family=EB+Garamond:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
-    body {
-      background: #0a0c14;
-      min-height: 100vh;
-      font-family: 'EB Garamond', 'Georgia', serif;
-      overflow-x: hidden;
-    }
-
-    /* ЗВЁЗДНОЕ НЕБО */
-    .stars {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      pointer-events: none;
-      z-index: 0;
-      background: radial-gradient(ellipse at center, #0a0f1a 0%, #030507 100%);
-    }
-    .star {
-      position: absolute;
-      background: white;
-      border-radius: 50%;
-      opacity: 0.6;
-      animation: twinkle 2s infinite alternate;
-    }
-    @keyframes twinkle {
-      0% { opacity: 0.2; transform: scale(1); }
-      100% { opacity: 1; transform: scale(1.2); }
-    }
-
-    /* ЭФФЕКТ СВЕЧИ */
-    .candle-effect {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      pointer-events: none;
-      z-index: 999;
-      background: radial-gradient(circle at center, rgba(255,200,100,0.08) 0%, rgba(0,0,0,0) 70%);
-      opacity: 0;
-      transition: opacity 0.8s ease;
-    }
-    .candle-effect.active {
-      opacity: 1;
-    }
-
-    .white-overlay {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: white;
-      z-index: 10000;
-      opacity: 0;
-      pointer-events: none;
-      transition: opacity 1.2s ease;
-    }
-    .white-overlay.active {
-      opacity: 1;
-      pointer-events: auto;
-    }
-
-    /* КНОПКА ПОСТАВИТЬ СВЕЧКУ (НОВАЯ) */
-    .candle-button-new {
-      position: fixed;
-      bottom: 24px;
-      right: 24px;
-      background: rgba(20, 20, 35, 0.85);
-      backdrop-filter: blur(8px);
-      border: 1px solid rgba(255, 215, 150, 0.5);
-      border-radius: 60px;
-      padding: 12px 24px;
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      cursor: pointer;
-      z-index: 1100;
-      transition: all 0.3s ease;
-      font-family: 'Playfair Display', serif;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.3);
-    }
-    .candle-button-new:hover {
-      background: rgba(60, 50, 35, 0.95);
-      transform: scale(1.02);
-      border-color: #ffc285;
-    }
-    .candle-icon-new {
-      font-size: 28px;
-      filter: drop-shadow(0 0 4px orange);
-    }
-    .candle-text-new {
-      font-size: 18px;
-      color: #ffefcf;
-      font-weight: 500;
-      letter-spacing: 1px;
-    }
-
-    /* PWA баннер */
-    .install-banner {
-      position: fixed;
-      bottom: 100px;
-      left: 20px;
-      right: 20px;
-      background: #1e1a2fcc;
-      backdrop-filter: blur(12px);
-      border-radius: 32px;
-      padding: 12px 20px;
-      z-index: 1150;
-      border: 1px solid #d4af7a;
-      display: none;
-      font-family: sans-serif;
-    }
-    .install-content {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      flex-wrap: wrap;
-      gap: 10px;
-    }
-    .install-button {
-      background: #c9a87b;
-      border: none;
-      padding: 8px 20px;
-      border-radius: 40px;
-      font-weight: bold;
-      cursor: pointer;
-      color: #1e1a2f;
-    }
-    .install-close {
-      background: none;
-      border: none;
-      color: #eee;
-      font-size: 20px;
-      cursor: pointer;
-    }
-
-    /* звук */
-    .sound-control {
-      position: fixed;
-      bottom: 24px;
-      left: 24px;
-      background: rgba(0,0,0,0.6);
-      backdrop-filter: blur(5px);
-      padding: 8px 16px;
-      border-radius: 40px;
-      display: flex;
-      gap: 8px;
-      align-items: center;
-      cursor: pointer;
-      z-index: 1100;
-      font-family: monospace;
-      color: #f5e2c1;
-    }
-
-    .wrap {
-      position: relative;
-      z-index: 2;
-      max-width: 1100px;
-      margin: 0 auto;
-      padding: 20px 16px 40px;
-    }
-
-    .header-top {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      background: rgba(20, 18, 28, 0.7);
-      backdrop-filter: blur(8px);
-      border-radius: 60px;
-      padding: 10px 24px;
-      margin-bottom: 24px;
-      border: 1px solid #b8a16e;
-    }
-    .candle-counter {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      background: #2c241acc;
-      padding: 6px 18px;
-      border-radius: 40px;
-    }
-    .counter-icon { font-size: 22px; }
-    .counter-text { font-size: 20px; font-weight: bold; color: #ffdd99; }
-    .candle-button {
-      background: #3e2c1f;
-      border: none;
-      padding: 8px 20px;
-      border-radius: 40px;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      color: #fff0d0;
-      font-family: inherit;
-      cursor: pointer;
-      transition: 0.2s;
-    }
-    .main-header {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 28px;
-      align-items: center;
-      background: rgba(0,0,0,0.45);
-      backdrop-filter: blur(4px);
-      border-radius: 48px;
-      padding: 28px 24px;
-      margin-bottom: 32px;
-      border: 1px solid rgba(218, 185, 110, 0.6);
-    }
-    .avatar img {
-      width: 140px;
-      height: 140px;
-      object-fit: cover;
-      border-radius: 50%;
-      border: 3px solid #e9c891;
-      box-shadow: 0 8px 20px rgba(0,0,0,0.4);
-    }
-    .header-text h1 {
-      font-family: 'Playfair Display', serif;
-      color: #fae7c6;
-      font-size: 2rem;
-      margin-bottom: 8px;
-    }
-    .dates { font-size: 1.3rem; color: #ddc8a5; margin-bottom: 12px; }
-    .days-counter { font-size: 1rem; background: #2d241bb3; display: inline-block; padding: 4px 12px; border-radius: 30px; }
-    .message-text { font-style: italic; color: #e7dbbc; margin-top: 12px; line-height: 1.4; }
-
-    .video-section {
-      margin-bottom: 32px;
-      border-radius: 32px;
-      overflow: hidden;
-      box-shadow: 0 12px 28px black;
-    }
-    .video-wrapper video {
-      width: 100%;
-      display: block;
-    }
-
-    .hidden-content {
-      transition: all 0.6s ease;
-    }
-    .paper-background {
-      background: #fef7e8;
-      background-image: radial-gradient(circle at 25% 40%, rgba(200,170,120,0.05) 2%, transparent 2.5%);
-      background-size: 28px 28px;
-      border-radius: 42px;
-      padding: 32px 24px;
-      box-shadow: 0 20px 35px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,200,0.8);
-    }
-
-    .timeline-title {
-      font-family: 'Playfair Display', serif;
-      font-size: 2rem;
-      text-align: center;
-      margin-bottom: 2rem;
-      color: #4a3624;
-      border-bottom: 2px dashed #c7aa7b;
-      display: inline-block;
-      width: auto;
-      padding-bottom: 6px;
-    }
-    .timeline {
-      position: relative;
-      padding-left: 20px;
-      margin: 30px 0;
-    }
-    .timeline::before {
-      content: '';
-      position: absolute;
-      left: 8px;
-      top: 10px;
-      bottom: 10px;
-      width: 2px;
-      background: #bb9a6e;
-    }
-    .timeline-item {
-      display: flex;
-      margin-bottom: 32px;
-      gap: 18px;
-    }
-    .timeline-dot {
-      width: 14px;
-      height: 14px;
-      background: #c28a4b;
-      border-radius: 50%;
-      margin-top: 6px;
-      box-shadow: 0 0 0 3px #ffefcf;
-      z-index: 2;
-    }
-    .timeline-content {
-      flex: 1;
-    }
-    .timeline-year {
-      font-weight: bold;
-      font-size: 1.3rem;
-      color: #7a551e;
-      font-family: 'Cormorant Garamond', serif;
-    }
-    .timeline-text {
-      font-size: 1rem;
-      color: #2c2418;
-      margin: 5px 0 8px;
-    }
-    .timeline-video {
-      max-width: 200px;
-      border-radius: 12px;
-      margin-top: 8px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-    }
-
-    .bio {
-      background: #fff7ec;
-      padding: 24px;
-      border-radius: 32px;
-      margin: 40px 0;
-      font-size: 1.1rem;
-      line-height: 1.5;
-      color: #2b241c;
-      border-left: 5px solid #cb9e6b;
-    }
-
-    .info-row {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 30px;
-      margin: 40px 0;
-    }
-    .coordinates-section {
-      flex: 2;
-      display: flex;
-      gap: 18px;
-      background: #f5ecdc;
-      padding: 20px;
-      border-radius: 28px;
-    }
-    .qr-section {
-      flex: 1;
-      background: #f5ecdc;
-      border-radius: 28px;
-      padding: 20px;
-      text-align: center;
-    }
-    .qr-frame img {
-      width: 140px;
-      height: auto;
-      margin: 12px 0;
-      border-radius: 16px;
-    }
-    .coordinates-button {
-      display: inline-block;
-      margin-top: 12px;
-      background: #ac874e;
-      padding: 8px 18px;
-      border-radius: 40px;
-      color: white;
-      text-decoration: none;
-    }
-
-    footer {
-      margin-top: 40px;
-      text-align: center;
-      border-top: 1px solid #dac29c;
-      padding-top: 24px;
-    }
-    .memorial-sign {
-      font-family: 'Great Vibes', cursive;
-      font-size: 1.8rem;
-      display: block;
-    }
-    
-    /* НОВЫЙ БЛОК ДЛЯ TELEGRAM КОММЕНТАРИЕВ */
-    .telegram-comment-block {
-      margin: 40px 0 20px;
-      background: #f1eadb;
-      border-radius: 36px;
-      padding: 20px 28px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      flex-wrap: wrap;
-      gap: 20px;
-      border: 1px solid #cfb27a;
-      box-shadow: 0 8px 18px rgba(0,0,0,0.05);
-      transition: all 0.2s;
-    }
-    .telegram-info {
-      display: flex;
-      align-items: center;
-      gap: 18px;
-      flex-wrap: wrap;
-    }
-    .telegram-icon {
-      font-size: 48px;
-      background: #2c7cb0;
-      width: 64px;
-      height: 64px;
-      border-radius: 50%;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      background: linear-gradient(135deg, #2aabee, #229ed9);
-      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-    }
-    .telegram-icon span {
-      font-size: 36px;
-    }
-    .telegram-text h4 {
-      font-family: 'Playfair Display', serif;
-      font-size: 1.5rem;
-      color: #4c351e;
-      margin-bottom: 6px;
-    }
-    .telegram-text p {
-      color: #4a3a28;
-      font-size: 0.95rem;
-    }
-    .telegram-button {
-      background: #2c7cb0;
-      border: none;
-      padding: 12px 28px;
-      border-radius: 60px;
-      font-weight: bold;
-      font-size: 1.1rem;
-      display: inline-flex;
-      align-items: center;
-      gap: 12px;
-      cursor: pointer;
-      transition: 0.2s;
-      color: white;
-      text-decoration: none;
-      font-family: inherit;
-      background: #2c7cb0;
-      background: linear-gradient(145deg, #2a9ad6, #1e6e9e);
-      box-shadow: 0 2px 6px rgba(0,0,0,0.2);
-    }
-    .telegram-button:hover {
-      transform: scale(1.02);
-      background: #3e9ad4;
-      box-shadow: 0 8px 18px rgba(0,0,0,0.15);
-    }
-    @media (max-width: 680px) {
-      .telegram-comment-block { flex-direction: column; text-align: center; }
-      .telegram-info { flex-direction: column; text-align: center; }
-      .candle-button-new { padding: 8px 18px; bottom: 16px; right: 16px; }
-    }
-  </style>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
+  <!-- ЗВЁЗДНОЕ НЕБО -->
   <div class="stars" id="stars"></div>
+  
+  <!-- ЭФФЕКТ СВЕЧИ -->
   <div class="candle-effect" id="candleEffect"></div>
+  
+  <!-- ЗАБЕЛИВАНИЕ -->
   <div class="white-overlay" id="whiteOverlay"></div>
+  
+  <!-- НОВАЯ ОТДЕЛЬНАЯ КНОПКА ПОСТАВИТЬ СВЕЧКУ -->
   <div class="candle-button-new" id="candleButtonNew">
     <span class="candle-icon-new">🕯️</span>
     <span class="candle-text-new">Поставить свечку</span>
   </div>
+  
+  <!-- КНОПКА УСТАНОВКИ PWA -->
   <div class="install-banner" id="installBanner">
     <div class="install-content">
       <span class="install-icon">📱</span>
       <span class="install-text">Установите приложение для быстрого доступа</span>
       <button class="install-button" id="installButton">Установить</button>
-      <button class="install-close" id="closeInstallBtn">✕</button>
+      <button class="install-close" onclick="this.parentElement.parentElement.style.display='none'">✕</button>
     </div>
   </div>
+  
+  <!-- КНОПКА УПРАВЛЕНИЯ ЗВУКОМ -->
   <div class="sound-control" id="soundControl" style="display: none;">
     <span class="sound-icon" id="soundIcon">🔊</span>
     <span class="sound-text" id="soundText">Выключить звук</span>
   </div>
-
+  
+  <!-- Аудио -->
   <audio id="bioAudio" preload="auto" loop>
     <source src="https://github.com/rodnyetut/mem/raw/main/voice45.mp3" type="audio/mpeg">
   </audio>
+  
+  <!-- Аудио для звука свечи -->
   <audio id="candleSound" preload="auto">
     <source src="zvon2.mp3" type="audio/mpeg">
   </audio>
 
   <div class="wrap">
+      
+      <!-- ШАПКА С КНОПКОЙ -->
       <div class="header-top" id="headerTop">
         <div class="candle-counter" id="candleCounter">
           <span class="counter-icon">🕯️</span>
@@ -504,21 +67,33 @@
         </button>
       </div>
       
+      <!-- ШАПКА С ФОТО -->
       <header class="main-header" id="mainHeader">
         <div class="avatar">
           <img id="photo" src="photo.jpg" alt="Фотография">
         </div>
         <div class="header-text">
           <h1 id="name">Миля Илларионовна Карелина</h1>
-          <div class="dates" id="dates">11.12.1935 - 27.03.2013</div>
+          <div class="dates" id="dates">
+            11.12.1935 - 27.03.2013
+          </div>
           <div class="days-counter" id="daysCounter">
             <span>Прошло дней с ухода:</span>
             <span class="days-number" id="daysCount"></span>
           </div>
-          <div><p class="message-text"><br>Я всё сполна вам здесь, на этом свете раздала.<br>Живите щедро, не тая, открыто,<br>как я жила - от всей души, любя.<br>Чтоб ваше сердце было не разбито,<br>а лишь добро дарило, как и я.<br></p></div>
+       <!--   <div class="memorial-message"> -->
+              <div><p class="message-text">
+<br>Я всё сполна вам здесь, на этом свете раздала.
+Живите щедро, не тая, открыто,
+как я жила - от всей души, любя.
+Чтоб ваше сердце было не разбито,
+а лишь добро дарило, как и я.</br>
+             </p>
+            </div>
         </div>
       </header>
 
+      <!-- ВИДЕО -->
       <section class="video-section" id="videoSection">
         <div class="video-wrapper">
           <video id="videoPlayer" controls playsinline preload="auto" muted autoplay loop>
@@ -527,246 +102,145 @@
         </div>
       </section>
 
+      <!-- КОНТЕНТ НА СТАРОЙ БУМАГЕ -->
       <div class="hidden-content" id="hiddenContent">
         <div class="paper-background">
+          
+          <!-- ХРОНОЛОГИЯ -->
           <section class="timeline-section" id="timeline">
             <h2 class="timeline-title">Хронология жизни</h2>
             <div class="timeline">
-              <div class="timeline-item"><div class="timeline-dot"></div><div class="timeline-content"><div class="timeline-year">1935</div><div class="timeline-text">Родилась 11 декабря в городе Вологда (на фото примерно 13 лет. Рядом стоит сестра Лина, на руках брат Валентин)</div><video class="timeline-video" autoplay muted loop playsinline><source src="13let.mp4" type="video/mp4"></video></div></div>
-              <div class="timeline-item"><div class="timeline-dot"></div><div class="timeline-content"><div class="timeline-year">1950-е</div><div class="timeline-text">Начала трудовую деятельность продавцом</div></div></div>
-              <div class="timeline-item"><div class="timeline-dot"></div><div class="timeline-content"><div class="timeline-year">1960-е</div><div class="timeline-text">Вышла замуж за Карелина Льва Алексеевича</div><video class="timeline-video" autoplay muted loop playsinline><source src="MilyasMuzhem.mp4" type="video/mp4"></video></div></div>
-              <div class="timeline-item"><div class="timeline-dot"></div><div class="timeline-content"><div class="timeline-year">1961</div><div class="timeline-text">Рождение двойняшек - Сергея и Ольги</div></div></div>
-              <div class="timeline-item"><div class="timeline-dot"></div><div class="timeline-content"><div class="timeline-year">1973-1991</div><div class="timeline-text">Работа в горгазе, проверка газового оборудования</div></div></div>
-              <div class="timeline-item"><div class="timeline-dot"></div><div class="timeline-content"><div class="timeline-year">1981</div><div class="timeline-text">Овдовела</div></div></div>
-              <div class="timeline-item"><div class="timeline-dot"></div><div class="timeline-content"><div class="timeline-year">1987</div><div class="timeline-text">Путешествие в Германию</div><video class="timeline-video" autoplay muted loop playsinline><source src="babulya.mp4" type="video/mp4"></video></div></div>
-              <div class="timeline-item"><div class="timeline-dot"></div><div class="timeline-content"><div class="timeline-year">2000-е</div><div class="timeline-text">Работа на рынке после пенсии, помощь семье</div></div></div>
-              <div class="timeline-item"><div class="timeline-dot"></div><div class="timeline-content"><div class="timeline-year">2013</div><div class="timeline-text">Ушла из жизни 27 марта</div></div></div>
+              <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="timeline-content">
+                  <div class="timeline-year">1935</div>
+                  <div class="timeline-text">Родилась 11 декабря в городе Вологда (на фото примерно 13 лет. Рядом стоит сестра Лина, на руках брат Валентин)</div>
+                  <!-- короткое видео с автоматическим воспроизведением и без рамки -->
+                  <video class="timeline-video" autoplay muted loop playsinline>
+                    <source src="13let.mp4" type="video/mp4">
+                  </video>
+                </div>
+              </div>
+              <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="timeline-content">
+                  <div class="timeline-year">1950-е</div>
+                  <div class="timeline-text">Начала трудовую деятельность продавцом</div>
+                </div>
+              </div>
+              <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="timeline-content">
+                  <div class="timeline-year">1960-е</div>
+                  <div class="timeline-text">Вышла замуж за Карелина Льва Алексеевича</div>
+                  <!-- короткое видео с автоматическим воспроизведением и без рамки -->
+                  <video class="timeline-video" autoplay muted loop playsinline>
+                    <source src="MilyasMuzhem.mp4" type="video/mp4">
+                  </video>
+                </div>
+              </div>
+              <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="timeline-content">
+                  <div class="timeline-year">1961</div>
+                  <div class="timeline-text">Рождение двойняшек - Сергея и Ольги</div>
+                </div>
+              </div>
+              <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="timeline-content">
+                  <div class="timeline-year">1973-1991</div>
+                  <div class="timeline-text">Работа в горгазе, проверка газового оборудования</div>
+                </div>
+              </div>
+              <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="timeline-content">
+                  <div class="timeline-year">1981</div>
+                  <div class="timeline-text">Овдовела</div>
+                </div>
+              </div>
+             <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="timeline-content">
+                  <div class="timeline-year">1987</div>
+                  <div class="timeline-text">Путешествие в Германию</div>
+                  <!-- короткое видео с автоматическим воспроизведением и без рамки -->
+                  <video class="timeline-video" autoplay muted loop playsinline>
+                    <source src="babulya.mp4" type="video/mp4">
+                  </video>
+                </div>
+              </div>
+              <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="timeline-content">
+                  <div class="timeline-year">2000-е</div>
+                  <div class="timeline-text">Работа на рынке после пенсии, помощь семье</div>
+                </div>
+              </div>
+              <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="timeline-content">
+                  <div class="timeline-year">2013</div>
+                  <div class="timeline-text">Ушла из жизни 27 марта</div>
+                </div>
+              </div>
             </div>
           </section>
 
+          <!-- БИОГРАФИЯ -->
           <section class="bio" id="bio">
             <p id="typing-text"></p>
           </section>
 
+          <!-- КООРДИНАТЫ И QR -->
           <div class="info-row" id="info">
             <section class="coordinates-section">
               <div class="coordinates-icon">🕊️</div>
               <div class="coordinates-content">
                 <h3 class="coordinates-title">Место упокоения</h3>
-                <div class="coordinates-display"><span class="coord">59.157658</span><span class="coord-sep">,</span><span class="coord">39.910106</span></div>
-                <div class="coordinates-caption"><span class="caption-text">Рада,что вы пришли.Посидите в тишине,здесь она особенная...</span></div>
-                <a href="https://yandex.ru/maps/?ll=39.910106,59.157658&z=16&pt=39.910106,59.157658" target="_blank" class="coordinates-button"><span class="button-icon">🗺️</span> Открыть на карте</a>
+                <div class="coordinates-display">
+                  <span class="coord">59.157658</span>
+                  <span class="coord-sep">,</span>
+                  <span class="coord">39.910106</span>
+                </div>
+                <div class="coordinates-caption">
+                  <span class="caption-text">Рада,что вы пришли.Посидите в тишине,здесь она особенная...</span>
+                </div>
+                <a href="https://yandex.ru/maps/?ll=39.910106,59.157658&z=16&pt=39.910106,59.157658" 
+                   target="_blank" class="coordinates-button">
+                  <span class="button-icon">🗺️</span>
+                  Открыть на карте
+                </a>
               </div>
             </section>
+
             <div class="qr-section">
               <div class="qr-label">Память всегда с вами</div>
-              <div class="qr-frame"><img src="https://github.com/rodnyetut/mem/raw/main/qr2.png" alt="QR-код"></div>
+              <div class="qr-frame">
+                <img src="https://github.com/rodnyetut/mem/raw/main/qr2.png" alt="QR-код">
+              </div>
               <div class="qr-hint">Отсканируйте, чтобы открыть страницу</div>
             </div>
           </div>
 
-          <!-- НОВЫЙ БЛОК: TELEGRAM ДЛЯ КОММЕНТАРИЕВ -->
-          <div class="telegram-comment-block" id="telegramBlock">
-            <div class="telegram-info">
-              <div class="telegram-icon"><span>💬</span></div>
-              <div class="telegram-text">
-                <h4>Оставить слова памяти</h4>
-                <p>Поделитесь воспоминаниями, напишите тёплые слова о Миле Илларионовне.<br>Ваши комментарии будут сохранены в Telegram-канале памяти.</p>
-              </div>
-            </div>
-            <a href="https://t.me/MemorialSite" target="_blank" class="telegram-button" id="telegramLinkBtn">
-              <span>📝</span> Написать отзыв
-            </a>
-          </div>
-
+          <!-- ПОДВАЛ -->
           <footer id="footer">
-            <div class="memorial-message"><p class="message-text">"Когда уходят хорошие люди, на небе зажигается новая звезда. Теперь их стало больше, а нам светлее.."</p></div>
-            <div class="footer-bottom"><span class="memorial-sign">вечная память</span><span>Страница создана близкими</span></div>
+            <div class="memorial-message">
+              <p class="message-text">"Когда уходят хорошие люди, на небе зажигается новая звезда. Теперь их стало больше, а нам светлее..</p>
+            </div>
+            
+            <div class="footer-bottom">
+              <span class="memorial-sign">вечная память</span>
+              <span>Страница создана близкими</span>
+            </div>
           </footer>
+          
         </div>
       </div>
+
   </div>
 
-  <script>
-    // ---------- Дни с ухода ----------
-    function updateDaysCounter() {
-      const deathDate = new Date(2013, 2, 27); // 27 марта 2013
-      const today = new Date();
-      const diffTime = today - deathDate;
-      const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
-      const daysSpan = document.getElementById('daysCount');
-      if (daysSpan) daysSpan.innerText = diffDays >= 0 ? diffDays : 0;
-    }
-    updateDaysCounter();
-
-    // -------- Свечи локальное хранилище ----------
-    let candleCount = localStorage.getItem('candleCount') ? parseInt(localStorage.getItem('candleCount')) : 0;
-    const counterSpan = document.getElementById('counterText');
-    const candleSound = document.getElementById('candleSound');
-    const candleEffectDiv = document.getElementById('candleEffect');
-    const whiteOverlayDiv = document.getElementById('whiteOverlay');
-    
-    function updateCandleDisplay() {
-      if(counterSpan) counterSpan.innerText = candleCount;
-      localStorage.setItem('candleCount', candleCount);
-    }
-    updateCandleDisplay();
-
-    function addCandle() {
-      candleCount++;
-      updateCandleDisplay();
-      // звук свечи
-      if(candleSound) {
-        candleSound.currentTime = 0;
-        candleSound.play().catch(e=>console.log("audio play failed", e));
-      }
-      // эффект мерцания
-      if(candleEffectDiv) {
-        candleEffectDiv.classList.add('active');
-        setTimeout(() => candleEffectDiv.classList.remove('active'), 900);
-      }
-      // белая вспышка
-      if(whiteOverlayDiv) {
-        whiteOverlayDiv.classList.add('active');
-        setTimeout(() => whiteOverlayDiv.classList.remove('active'), 400);
-      }
-    }
-
-    const newCandleBtn = document.getElementById('candleButtonNew');
-    if(newCandleBtn) newCandleBtn.addEventListener('click', addCandle);
-
-    // ---------- Биография аудио и печатный текст ----------
-    const audioBio = document.getElementById('bioAudio');
-    const playBioBtn = document.getElementById('candleButton');
-    const typingParagraph = document.getElementById('typing-text');
-    let isPlaying = false;
-    let fullBioText = "Миля Илларионовна Карелина родилась 11 декабря 1935 года в Вологде в семье служащих. Детство пришлось на тяжелые военные годы, но она всегда сохраняла светлый нрав. После школы начала трудиться продавцом, где все отмечали её душевность и трудолюбие. В 1960-х вышла замуж за Льва Алексеевича, родила двойняшек. Работала в горгазе, проверяла газовое оборудование, заслужила уважение коллег. Овдовев в 1981, не пала духом, воспитала детей. Путешествовала в Германию, много помогала родным. Она была человеком щедрой души, всегда отдавала тепло. Ушла 27 марта 2013 года, оставив светлую память в сердцах.";
-
-    function typeWriter(text, element, speed=35) {
-      let i = 0;
-      element.innerHTML = '';
-      function typing() {
-        if(i < text.length) {
-          element.innerHTML += text.charAt(i);
-          i++;
-          setTimeout(typing, speed);
-        }
-      }
-      typing();
-    }
-
-    playBioBtn.addEventListener('click', () => {
-      if(!isPlaying) {
-        audioBio.play().then(() => {
-          isPlaying = true;
-          playBioBtn.innerHTML = '<span class="candle-button-icon">🔊</span><span class="candle-button-text">Остановить биографию</span>';
-          typeWriter(fullBioText, typingParagraph, 28);
-        }).catch(err => console.log("audio autoplay blocked", err));
-      } else {
-        audioBio.pause();
-        isPlaying = false;
-        playBioBtn.innerHTML = '<span class="candle-button-icon">📖</span><span class="candle-button-text">Послушать биографию</span>';
-        // не очищаем текст, оставляем набранным
-      }
-    });
-
-    // звук контрольная кнопка (если понадобится)
-    const soundControlDiv = document.getElementById('soundControl');
-    const soundIconSpan = document.getElementById('soundIcon');
-    const soundTextSpan = document.getElementById('soundText');
-    if(soundControlDiv && audioBio) {
-      soundControlDiv.style.display = 'flex';
-      soundControlDiv.addEventListener('click', () => {
-        if(!audioBio.paused) {
-          audioBio.pause();
-          isPlaying = false;
-          soundIconSpan.innerText = '🔇';
-          soundTextSpan.innerText = 'Включить звук';
-          if(playBioBtn) playBioBtn.innerHTML = '<span class="candle-button-icon">📖</span><span class="candle-button-text">Послушать биографию</span>';
-        } else {
-          audioBio.play().catch(e=>console.log);
-          isPlaying = true;
-          soundIconSpan.innerText = '🔊';
-          soundTextSpan.innerText = 'Выключить звук';
-          if(playBioBtn) playBioBtn.innerHTML = '<span class="candle-button-icon">🔊</span><span class="candle-button-text">Остановить биографию</span>';
-          if(typingParagraph.innerText.length === 0) typeWriter(fullBioText, typingParagraph, 28);
-        }
-      });
-    }
-
-    // stars generator
-    const starsContainer = document.getElementById('stars');
-    if(starsContainer) {
-      for(let i=0;i<180;i++) {
-        let star = document.createElement('div');
-        star.classList.add('star');
-        let size = Math.random() * 2.5 + 1;
-        star.style.width = size+'px';
-        star.style.height = size+'px';
-        star.style.left = Math.random()*100+'%';
-        star.style.top = Math.random()*100+'%';
-        star.style.animationDelay = Math.random()*3+'s';
-        star.style.animationDuration = Math.random()*2+1+'s';
-        starsContainer.appendChild(star);
-      }
-    }
-
-    // PWA логика установки
-    let deferredPrompt;
-    const installBanner = document.getElementById('installBanner');
-    const installBtn = document.getElementById('installButton');
-    const closeInstall = document.getElementById('closeInstallBtn');
-
-    window.addEventListener('beforeinstallprompt', (e) => {
-      e.preventDefault();
-      deferredPrompt = e;
-      if(installBanner) installBanner.style.display = 'block';
-    });
-    if(installBtn) {
-      installBtn.addEventListener('click', async () => {
-        if(deferredPrompt) {
-          deferredPrompt.prompt();
-          const { outcome } = await deferredPrompt.userChoice;
-          deferredPrompt = null;
-          if(installBanner) installBanner.style.display = 'none';
-        } else {
-          if(installBanner) installBanner.style.display = 'none';
-        }
-      });
-    }
-    if(closeInstall) {
-      closeInstall.addEventListener('click', () => {
-        if(installBanner) installBanner.style.display = 'none';
-      });
-    }
-
-    // ---------- TELEGRAM ССЫЛКА (замените ссылку на реальную группу/бот) ----------
-    // Для комфорта пользователя откроем диалог или группу для комментариев.
-    // Рекомендуется создать чат/канал для отзывов. В примере используем URL, который нужно заменить.
-    const telegramBtn = document.getElementById('telegramLinkBtn');
-    if(telegramBtn) {
-      // замените на вашу актуальную ссылку Telegram (чат, канал или бот)
-      // Пример: https://t.me/milya_memory_bot или https://t.me/+AbCdEf12345
-      // В демо ставим плейсхолдер, но чтобы было функционально, дадим ссылку-заглушку с пояснением.
-      // В реальном проекте поменяйте href на свой.
-      telegramBtn.href = "https://t.me/+VdKx6yZxTlQ3MzJi";  // пример рабочей ссылки (замените при необходимости)
-      telegramBtn.setAttribute('target', '_blank');
-      // Дополнительно добавим подсказку о том, что ссылку можно поменять.
-    }
-    
-    // Если хотим более красивую интеграцию, добавляем всплывающее сообщение о Telegram:
-    const tgBlock = document.getElementById('telegramBlock');
-    if(tgBlock && !telegramBtn.href.includes('+your_channel_link')) {
-      // ссылка уже осмысленная (если заменили) — оставляем как есть
-      console.log("Telegram ссылка активна");
-    } else if(tgBlock && telegramBtn) {
-      // чтобы не было битой ссылки, можно дать подсказку: но оставим заглушку для демо, админ заменит позже
-      telegramBtn.addEventListener('click', (e) => {
-        if(telegramBtn.href.includes('+your_channel_link')) {
-          e.preventDefault();
-          alert('Пожалуйста, укажите актуальную ссылку Telegram-чата для комментариев в коде страницы (атрибут href).');
-        }
-      });
-    }
-    
-    // Инициализация таймера дней
+  <script src="script.js"></script>
+</body>
+</html>          
